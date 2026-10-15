@@ -62,3 +62,74 @@
     background: white !important;
   }
 }
+
+
+/* Phase 6 — responsive safeguards and keyboard accessibility */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+}
+
+button, a, input, select, textarea, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid #D6B15E;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+
+  .dare-dashboard {
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .dare-dashboard button,
+  .dare-dashboard a,
+  .dare-dashboard [role="button"] {
+    touch-action: manipulation;
+  }
+
+  .dare-dashboard table {
+    max-width: 100%;
+  }
+
+  .dare-dashboard img {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
