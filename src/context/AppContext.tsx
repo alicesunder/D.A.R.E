@@ -444,7 +444,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Activity actions
   const createActivity = (data: Omit<Activity, 'id' | 'code' | 'createdAt' | 'updatedAt'>) => {
-    const code = `ACT-68-${(activities.length + 1).toString().padStart(3, '0')}`;
+    const [activityYear, activityMonth] = data.date.split('-').map(Number);
+    const fiscalYear = activityYear + (activityMonth >= 10 ? 544 : 543);
+    const code = `ACT-${String(fiscalYear).slice(-2)}-${(activities.length + 1).toString().padStart(3, '0')}`;
     const now = new Date().toISOString().split('T')[0];
     const newAct: Activity = {
       ...data,
