@@ -71,13 +71,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       id: 'schools', 
       label: 'จัดการโรงเรียน', 
       icon: Building2,
-      targetTab: 'hub-registry'
+      targetTab: 'schools'
     },
     { 
       id: 'personnel', 
       label: 'ครู D.A.R.E.', 
       icon: Users,
-      targetTab: 'hub-registry'
+      targetTab: 'personnel'
     },
     { 
       id: 'learning', 
@@ -139,8 +139,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
   const isMenuItemActive = (item: typeof menuItems[0]) => {
     if (item.id === 'overview' && (currentTab === 'overview' || currentTab === 'hub-overview')) return true;
-    if (item.id === 'schools' && currentTab === 'hub-registry') return true;
-    if (item.id === 'personnel' && currentTab === 'hub-assignment') return true;
+    if (item.id === 'schools' && (currentTab === 'hub-registry' || currentTab === 'schools')) return true;
+    if (item.id === 'personnel' && (currentTab === 'hub-registry' || currentTab === 'personnel')) return true;
     if (item.id === 'activities' && currentTab === 'hub-operations') return true;
     if ((item.id === 'statistics' || item.id === 'learning' || item.id === 'media_vault' || item.id === 'news') && currentTab === 'hub-governance') return true;
     return currentTab === item.targetTab;
