@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   Clock,
   MapPin,
+  GraduationCap,
   Play,
   CheckCircle2,
   FileSpreadsheet,
