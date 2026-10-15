@@ -189,7 +189,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
         </div>
 
         {/* Sub-tab Navigation */}
-        <div className="flex items-center bg-white p-1 rounded-xl border border-[#E7E0EF] text-xs">
+        <div className="flex flex-wrap items-center gap-1 bg-white p-1 rounded-xl border border-[#E7E0EF] text-xs">
           <button
             onClick={() => setActiveTab('reports')}
             className={`px-3.5 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1.5 ${
