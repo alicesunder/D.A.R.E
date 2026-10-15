@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">ครูช้าง D.A.R.E. สอนนักเรียน</title><desc id="desc">ภาพประกอบเวกเตอร์ครูช้างในห้องเรียนกับนักเรียน เพื่อการเรียนรู้และการตัดสินใจอย่างปลอดภัย</desc>
+<defs>
+ <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f2ff"/><stop offset="1" stop-color="#dceaff"/></linearGradient>
+ <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e7d9f7"/><stop offset="1" stop-color="#c5b4e7"/></linearGradient>
+ <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#34205f"/><stop offset="1" stop-color="#6240a1"/></linearGradient>
+ <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#bfc9d7"/><stop offset="1" stop-color="#8999ad"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#302052" flood-opacity=".16"/></filter>
+ <pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#9b86ca" opacity=".28"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="url(#wall)"/><rect width="1600" height="900" fill="url(#dots)" opacity=".45"/>
+<!-- classroom windows and board -->
+<g opacity=".95"><rect x="1020" y="100" width="440" height="260" rx="26" fill="#fff" stroke="#d9d1eb" stroke-width="12"/><rect x="1042" y="122" width="396" height="216" rx="12" fill="#c8e7f6"/><path d="M1240 122v216M1042 230h396" stroke="#fff" stroke-width="12"/><circle cx="1370" cy="160" r="26" fill="#ffd36b"/><path d="M1045 320l90-80 80 55 95-92 128 115" fill="#94c9b2" opacity=".9"/></g>
+<rect x="1030" y="395" width="430" height="220" rx="22" fill="#fff" stroke="#e4d8f3" stroke-width="10" filter="url(#shadow)"/>
+<rect x="1050" y="415" width="390" height="180" rx="12" fill="#2c5360"/>
+<g font-family="Arial,sans-serif" font-weight="800" text-anchor="middle"><text x="1245" y="465" font-size="31" fill="#fff">D.A.R.E.</text><path d="M1120 485h250" stroke="#f5c95d" stroke-width="6" stroke-linecap="round"/><text x="1245" y="528" font-size="20" fill="#e9f5ff">MAKE SAFE CHOICES</text><g transform="translate(1170 550)"><circle r="18" fill="#f5c95d"/><path d="M-8 0l6 6 11-13" fill="none" stroke="#2c5360" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(1245 550)"><circle r="18" fill="#9cdbbc"/><path d="M-8 0l6 6 11-13" fill="none" stroke="#2c5360" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(1320 550)"><circle r="18" fill="#b9c9ff"/><path d="M-8 0l6 6 11-13" fill="none" stroke="#2c5360" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+<path d="M0 680Q450 610 900 690T1600 650V900H0Z" fill="url(#floor)"/>
+<!-- students at desks -->
+<g filter="url(#shadow)">
+ <g transform="translate(1020 640)"><ellipse cx="0" cy="110" rx="100" ry="18" fill="#6d5b91" opacity=".16"/><path d="M-65 60Q-75 0-28-5H28Q75 0 65 60Z" fill="#f2b54a"/><path d="M-48 52v55M48 52v55" stroke="#8b5b38" stroke-width="13" stroke-linecap="round"/><circle cy="-42" r="47" fill="#bd815f"/><path d="M-45-48Q-55-100 0-94Q48-94 46-46L28-63-25-65Z" fill="#30264a"/><circle cx="-15" cy="-42" r="5" fill="#28223c"/><circle cx="15" cy="-42" r="5" fill="#28223c"/><path d="M-12-23Q0-12 13-23" fill="none" stroke="#8b4f46" stroke-width="4" stroke-linecap="round"/><path d="M-80 22h160l-15 32H-65Z" fill="#7d5ac3"/><path d="M-65 54v66M65 54v66" stroke="#6b4c9d" stroke-width="9"/></g>
+ <g transform="translate(1380 655)"><ellipse cx="0" cy="100" rx="94" ry="16" fill="#6d5b91" opacity=".16"/><path d="M-60 52Q-70 0-26-4H26Q70 0 60 52Z" fill="#7baddf"/><path d="M-43 45v57M43 45v57" stroke="#547da9" stroke-width="12" stroke-linecap="round"/><circle cy="-42" r="45" fill="#e1ad83"/><path d="M-45-48Q-50-97 0-91Q50-91 45-45L25-62-25-63Z" fill="#2e253f"/><circle cx="-14" cy="-42" r="5" fill="#28223c"/><circle cx="14" cy="-42" r="5" fill="#28223c"/><path d="M-11-22Q0-12 12-22" fill="none" stroke="#a75d57" stroke-width="4" stroke-linecap="round"/><path d="M-75 15h150l-14 33H-61Z" fill="#f5c95d"/><path d="M-60 48v68M60 48v68" stroke="#9e7c38" stroke-width="9"/></g>
+</g>
+<!-- elephant teacher -->
+<g transform="translate(760 180)" filter="url(#shadow)">
+ <!-- ears -->
+ <ellipse cx="-70" cy="210" rx="112" ry="136" fill="#8999ad"/><ellipse cx="-67" cy="214" rx="73" ry="96" fill="#dba7b2"/>
+ <ellipse cx="160" cy="210" rx="112" ry="136" fill="#a6b3c4"/><ellipse cx="162" cy="214" rx="72" ry="96" fill="#e7b8c2"/>
+ <!-- head -->
+ <path d="M-100 110Q-100 0 40 0Q180 0 196 116L186 266Q165 350 46 350Q-78 350-98 265Z" fill="url(#skin)"/>
+ <!-- trunk -->
+ <path d="M30 205Q42 255 8 292Q-16 326 16 347Q51 365 77 338Q91 323 72 309Q56 298 41 313Q62 280 65 246L64 205Z" fill="#9eacbf" stroke="#8292a7" stroke-width="7" stroke-linejoin="round"/>
+ <path d="M24 331q16 12 32-1" fill="none" stroke="#6d7d91" stroke-width="5" stroke-linecap="round"/>
+ <!-- eyes -->
+ <ellipse cx="-18" cy="153" rx="26" ry="32" fill="#fff"/><ellipse cx="102" cy="153" rx="26" ry="32" fill="#fff"/><ellipse cx="-10" cy="158" rx="13" ry="19" fill="#30264a"/><ellipse cx="110" cy="158" rx="13" ry="19" fill="#30264a"/><circle cx="-14" cy="150" r="5" fill="#fff"/><circle cx="106" cy="150" r="5" fill="#fff"/>
+ <path d="M-45 112q26-20 49-2M78 110q28-18 52 3" fill="none" stroke="#68798f" stroke-width="9" stroke-linecap="round"/>
+ <!-- smile -->
+ <path d="M78 228q-27 34-58 8" fill="none" stroke="#6d5967" stroke-width="6" stroke-linecap="round"/>
+ <!-- body shirt -->
+ <path d="M-112 365Q-75 315-16 318L45 365L99 319Q160 320 198 370L225 610H-145Z" fill="url(#shirt)"/>
+ <path d="M-16 318L45 365L99 319L80 402H0Z" fill="#fff"/>
+ <path d="M8 363l35 25 29-25" fill="none" stroke="#e4c36d" stroke-width="6" stroke-linecap="round"/>
+ <rect x="-95" y="430" width="150" height="58" rx="12" fill="#fff" opacity=".96"/><text x="-20" y="467" font-family="Arial,sans-serif" font-size="29" font-weight="900" fill="#4c2b83" text-anchor="middle">D.A.R.E.</text>
+ <!-- arms -->
+ <path d="M-100 390Q-170 420-170 486L-123 512Q-78 464-52 444" fill="#9baabd" stroke="#7e8da2" stroke-width="8" stroke-linecap="round"/><circle cx="-147" cy="502" r="29" fill="#aab6c7"/>
+ <path d="M166 385Q235 408 250 470L210 493Q172 455 130 444" fill="#aab6c7" stroke="#7e8da2" stroke-width="8" stroke-linecap="round"/><circle cx="224" cy="480" r="29" fill="#aab6c7"/>
+ <!-- book -->
+ <g transform="translate(190 520) rotate(-8)"><path d="M-60-5Q-25-25 0-2Q25-25 60-5V65Q25 45 0 68Q-25 45-60 65Z" fill="#f5c95d" stroke="#fff" stroke-width="5"/><path d="M0 0V65" stroke="#b88c38" stroke-width="4"/><path d="M-45 16h32M-45 29h32M15 16h32M15 29h32" stroke="#fff4d4" stroke-width="4" stroke-linecap="round"/></g>
+</g>
+<!-- subtle decorative sparkles -->
+<g fill="#e5b94e"><path d="M900 90l8 22 22 8-22 8-8 22-8-22-22-8 22-8Z"/><path d="M1510 405l6 16 16 6-16 6-6 16-6-16-16-6 16-6Z"/></g>
+<g fill="#8b5cf6" opacity=".5"><circle cx="960" cy="160" r="8"/><circle cx="1480" cy="510" r="6"/><circle cx="920" cy="590" r="5"/></g>
+</svg>
