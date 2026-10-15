@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { UserRole } from '../../types';
+import { MediaNews, UserRole } from '../../types';
 import { 
   FileText, 
   Newspaper, 
@@ -31,6 +31,8 @@ export const Hub5Governance: React.FC = () => {
     organizations, 
     news, 
     auditLogs, 
+    addNews,
+    updateNews,
     currentUser, 
     currentRole,
     switchRole,
@@ -48,6 +50,16 @@ export const Hub5Governance: React.FC = () => {
 
   // News CMS filter & search
   const [newsSearch, setNewsSearch] = useState('');
+  const [showNewsEditor, setShowNewsEditor] = useState(false);
+  const [editingNews, setEditingNews] = useState<MediaNews | null>(null);
+  const [newsDraft, setNewsDraft] = useState<Pick<MediaNews, 'title' | 'category' | 'summary' | 'content' | 'imageUrl' | 'status'>>({
+    title: '',
+    category: 'news',
+    summary: '',
+    content: '',
+    imageUrl: '',
+    status: 'draft',
+  });
 
   // Audit filter
   const [auditActionFilter, setAuditActionFilter] = useState('all');
@@ -89,6 +101,51 @@ export const Hub5Governance: React.FC = () => {
     } finally {
       setIsExporting(false);
     }
+  };
+
+  const openNewsEditor = (item?: MediaNews) => {
+    setEditingNews(item || null);
+    setNewsDraft(item ? {
+      title: item.title,
+      category: item.category,
+      summary: item.summary,
+      content: item.content,
+      imageUrl: item.imageUrl,
+      status: item.status,
+    } : {
+      title: '',
+      category: 'news',
+      summary: '',
+      content: '',
+      imageUrl: '',
+      status: 'draft',
+    });
+    setShowNewsEditor(true);
+  };
+
+  const handleSaveNews = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const title = newsDraft.title.trim();
+    const summary = newsDraft.summary.trim();
+    const body = newsDraft.content.trim();
+    if (!title || !summary || !body) return;
+
+    const data = {
+      ...newsDraft,
+      title,
+      summary,
+      content: body,
+      imageUrl: newsDraft.imageUrl.trim(),
+      publishedAt: editingNews?.publishedAt || new Date().toISOString(),
+      author: editingNews?.author || currentUser.name,
+    };
+    if (editingNews) {
+      updateNews(editingNews.id, data);
+    } else {
+      addNews(data);
+    }
+    setShowNewsEditor(false);
+    setEditingNews(null);
   };
 
   const filteredNews = news.filter((n) => 
@@ -339,7 +396,7 @@ export const Hub5Governance: React.FC = () => {
             </div>
 
             {currentRole !== 'report_viewer' && (
-              <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#32145C] hover:bg-[#250E42] text-[#FFE082] text-xs font-semibold shadow-xs">
+              <button type="button" onClick={() => openNewsEditor()} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#32145C] hover:bg-[#250E42] text-[#FFE082] text-xs font-semibold shadow-xs">
                 <Plus className="w-4 h-4" />
                 <span>เขียนข่าวใหม่</span>
               </button>
@@ -368,12 +425,62 @@ export const Hub5Governance: React.FC = () => {
                     {item.status === 'published' ? 'เผยแพร่แล้ว' : 'ฉบับร่าง'}
                   </span>
                   <div className="flex items-center gap-2">
-                    <button className="text-xs text-[#5B2A86] hover:underline font-semibold">แก้ไข</button>
+                    <button type="button" onClick={() => openNewsEditor(item)} className="text-xs text-[#5B2A86] hover:underline font-semibold">แก้ไข</button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {showNewsEditor && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-labelledby="news-editor-title">
+              <form onSubmit={handleSaveNews} className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl space-y-4">
+                <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
+                  <h2 id="news-editor-title" className="text-lg font-bold text-[#32145C]">{editingNews ? 'แก้ไขข่าวสาร' : 'เขียนข่าวใหม่'}</h2>
+                  <button type="button" onClick={() => setShowNewsEditor(false)} className="rounded-lg px-3 py-1 text-sm text-gray-500 hover:bg-gray-100" aria-label="ปิดหน้าต่าง">ปิด</button>
+                </div>
+                <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
+                  <span>หัวข้อข่าว *</span>
+                  <input required value={newsDraft.title} onChange={(e) => setNewsDraft((draft) => ({ ...draft, title: e.target.value }))} className="w-full rounded-xl border border-[#E7E0EF] px-3 py-2 text-sm font-normal focus:border-[#7C3AED] focus:outline-none" />
+                </label>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
+                    <span>ประเภทข่าว</span>
+                    <select value={newsDraft.category} onChange={(e) => setNewsDraft((draft) => ({ ...draft, category: e.target.value as MediaNews['category'] }))} className="w-full rounded-xl border border-[#E7E0EF] px-3 py-2 text-sm font-normal">
+                      <option value="news">ข่าวสาร</option>
+                      <option value="activity">กิจกรรม</option>
+                      <option value="knowledge">ความรู้</option>
+                      <option value="announcement">ประกาศ</option>
+                    </select>
+                  </label>
+                  <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
+                    <span>สถานะเผยแพร่</span>
+                    <select value={newsDraft.status} onChange={(e) => setNewsDraft((draft) => ({ ...draft, status: e.target.value as MediaNews['status'] }))} className="w-full rounded-xl border border-[#E7E0EF] px-3 py-2 text-sm font-normal">
+                      <option value="draft">ฉบับร่าง</option>
+                      <option value="published">เผยแพร่แล้ว</option>
+                      <option value="archived">เก็บเข้าคลัง</option>
+                    </select>
+                  </label>
+                </div>
+                <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
+                  <span>คำโปรย / สรุปข่าว *</span>
+                  <textarea required rows={2} value={newsDraft.summary} onChange={(e) => setNewsDraft((draft) => ({ ...draft, summary: e.target.value }))} className="w-full rounded-xl border border-[#E7E0EF] px-3 py-2 text-sm font-normal focus:border-[#7C3AED] focus:outline-none" />
+                </label>
+                <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
+                  <span>เนื้อหาข่าว *</span>
+                  <textarea required rows={5} value={newsDraft.content} onChange={(e) => setNewsDraft((draft) => ({ ...draft, content: e.target.value }))} className="w-full rounded-xl border border-[#E7E0EF] px-3 py-2 text-sm font-normal focus:border-[#7C3AED] focus:outline-none" />
+                </label>
+                <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
+                  <span>URL รูปภาพ (ถ้ามี)</span>
+                  <input type="url" value={newsDraft.imageUrl} onChange={(e) => setNewsDraft((draft) => ({ ...draft, imageUrl: e.target.value }))} placeholder="https://..." className="w-full rounded-xl border border-[#E7E0EF] px-3 py-2 text-sm font-normal focus:border-[#7C3AED] focus:outline-none" />
+                </label>
+                <div className="flex justify-end gap-3 border-t border-[#E7E0EF] pt-4">
+                  <button type="button" onClick={() => setShowNewsEditor(false)} className="rounded-xl border border-[#E7E0EF] px-4 py-2 text-xs font-semibold text-[#756B80] hover:bg-gray-50">ยกเลิก</button>
+                  <button type="submit" className="rounded-xl bg-[#32145C] px-5 py-2 text-xs font-semibold text-[#FFE082] hover:bg-[#250E42]">{editingNews ? 'บันทึกการแก้ไข' : 'บันทึกข่าว'}</button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
       )}
 
