@@ -412,7 +412,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </header>
 
           {/* Main Viewport Content */}
-          <main className="flex-1 min-w-0 p-0">
+          <main className={currentTab === 'overview' || currentTab === 'hub-overview' ? "flex-1 min-w-0 p-0" : "flex-1 min-w-0 px-4 pb-8 pt-[92px] sm:px-6 sm:pt-[100px] lg:px-8"}>
             {children}
           </main>
         </div>
