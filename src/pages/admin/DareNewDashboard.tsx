@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { 
-  Building2, 
-  User, 
-  Users, 
-  BookOpen, 
-  ChevronRight, 
-  ChevronLeft, 
-  Clock, 
-  MapPin, 
-  Play, 
-  Calendar, 
-  FileSpreadsheet, 
-  CheckCircle2, 
-  Sparkles,
+import {
+  Building2,
+  User,
+  Users,
+  BookOpen,
+  ChevronRight,
+  ChevronLeft,
+  Clock,
+  MapPin,
+  Play,
+  CheckCircle2,
+  FileSpreadsheet,
   ArrowRight,
-  Shield,
   Eye,
   X
 } from 'lucide-react';
 import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
-import { DareElephantMascot } from '../../components/ui/MascotArt';
 
 interface DareNewDashboardProps {
   onNavigateHub: (hubId: string) => void;
@@ -31,10 +27,17 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
     schools, 
     personnel, 
     activities, 
-    exportActivitiesToGoogleSheets,
-    exportSchoolsToGoogleSheets,
-    exportRosterToGoogleSheets
+    news,
+    exportActivitiesToGoogleSheets
   } = useApp();
+
+  const totalStudentsReached = activities.reduce((sum, activity) => sum + (activity.studentCount || 0), 0);
+  const yearlyStudentStats = Object.entries(activities.reduce<Record<string, number>>((totals, activity) => {
+    const year = activity.fiscalYear || 'ไม่ระบุ';
+    totals[year] = (totals[year] || 0) + (activity.studentCount || 0);
+    return totals;
+  }, {})).filter(([year]) => year !== 'ไม่ระบุ').sort(([a], [b]) => a.localeCompare(b, 'th')).slice(-5);
+  const maxYearlyStudents = Math.max(1, ...yearlyStudentStats.map(([, count]) => count));
 
   // Carousel slide state for featured activities
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -107,7 +110,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans">
+    <div className="dare-dashboard mx-auto w-full min-w-0 space-y-3 pb-8 font-sans text-[#172554]">
       {/* Google Sheets Export Alert Banner if exported */}
       {exportNotice && (
         <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-purple-900 text-xs flex items-center justify-between shadow-xs">
@@ -128,109 +131,68 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
       )}
 
-      {/* 1. HERO BANNER: 3D D.A.R.E. Cartoon Mascot & Thai Students Scene */}
-      <section className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#DCEBFE] via-[#E8F2FE] to-[#F1F6FF] border border-blue-100 shadow-sm p-6 sm:p-10">
-        {/* Subtle decorative doodles in background */}
-        <div className="absolute top-4 left-6 text-2xl select-none opacity-40">✨</div>
-        <div className="absolute top-12 left-1/3 text-xl select-none opacity-40">✈️</div>
-        <div className="absolute bottom-6 left-1/4 text-2xl select-none opacity-30">⭐️</div>
-        <div className="absolute top-6 right-1/3 text-xl select-none opacity-30">💡</div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-          {/* Left Text & CTAs (7 cols) */}
-          <div className="lg:col-span-7 space-y-4 text-center sm:text-left">
-            {/* Main Headline with 3D Pop Typography */}
-            <div className="space-y-1">
-              <h1 className="text-3xl sm:text-5xl font-black text-[#1E1B4B] tracking-tight leading-tight">
-                สร้างภูมิคุ้มกันให้เด็กไทย
-              </h1>
-              <div className="inline-block relative">
-                <span className="text-3xl sm:text-5xl font-black text-[#E11D48] tracking-tight leading-tight drop-shadow-sm">
-                  ห่างไกลยาเสพติด
-                </span>
-                {/* Underline brush effect */}
-                <div className="h-1.5 w-full bg-gradient-to-r from-[#E11D48] to-[#FB7185] rounded-full mt-0.5 opacity-80" />
-              </div>
+      {/* 1. HERO BANNER — use the exact user-provided D.A.R.E. classroom artwork */}
+      <section className="relative isolate min-h-[340px] overflow-hidden bg-[#eaf4ff] shadow-[0_12px_32px_rgba(31,52,117,0.10)] sm:min-h-[360px] xl:min-h-[368px]">
+        <img
+          src="https://d2ol7oe51mr4n9.cloudfront.net/user_3HTUhITR3E84djUNoi07Bq69Ud2/f13966dc-cde8-4a11-b3e7-b5f070d8207a.png"
+          alt="ครูช้าง D.A.R.E. กำลังสอนนักเรียนในห้องเรียน"
+          className="absolute inset-0 h-full w-full object-cover object-[68%_center] sm:object-[68%_center]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#edf6ff]/96 via-[#edf6ff]/82 to-[#edf6ff]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#11255e]/15 via-transparent to-transparent" />
+        <div className="absolute left-6 top-5 z-10 text-3xl text-[#FBBF24] drop-shadow-sm">✦</div>
+        <div className="absolute left-[47%] top-8 z-10 hidden text-2xl text-[#60A5FA] drop-shadow-sm sm:block">✈</div>
+        <div className="absolute bottom-7 left-[42%] z-10 text-3xl text-[#FBBF24] drop-shadow-sm">★</div>
+        <div className="relative z-10 flex min-h-[340px] items-center px-5 pb-4 pt-[88px] sm:min-h-[360px] sm:px-9 xl:min-h-[368px] xl:px-10">
+          <div className="max-w-[75%] sm:max-w-[57%] lg:max-w-[56%]">
+            <h1 className="max-w-3xl text-3xl font-black leading-[1.12] tracking-tight text-[#14265D] [text-shadow:0_1px_0_rgba(255,255,255,0.9)] sm:text-4xl xl:text-[42px]">
+              สร้างภูมิคุ้มกันให้เด็กไทย
+            </h1>
+            <div className="mt-2 inline-block">
+              <span className="text-3xl font-black leading-tight tracking-tight text-[#F31635] [text-shadow:0_1px_0_rgba(255,255,255,0.8)] sm:text-4xl xl:text-[43px]">ห่างไกลยาเสพติด</span>
+              <div className="mt-2 h-[7px] rounded-full bg-gradient-to-r from-[#F31635] via-[#F31635] to-[#2449D8]" />
             </div>
-
-            {/* Subtitle Quote */}
-            <p className="text-sm sm:text-base text-[#475569] font-medium leading-relaxed max-w-xl">
+            <p className="mt-4 max-w-xl text-sm font-bold leading-6 text-[#14265D] [text-shadow:0_1px_2px_rgba(255,255,255,0.9)] sm:text-base">
               “รู้คิด รู้เท่าทัน เลือกสิ่งที่ดี เพื่ออนาคตที่สดใสของเยาวชนไทย”
             </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3.5 pt-2">
-              <button
-                onClick={() => onNavigateHub('hub-overview')}
-                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#E11D48] to-[#BE123C] hover:from-[#f43f5e] hover:to-[#e11d48] text-white text-xs sm:text-sm font-bold shadow-md shadow-rose-900/20 flex items-center gap-2 transition-transform hover:-translate-y-0.5"
-              >
-                <span>ดูข้อมูลโครงการ</span>
-                <ArrowRight className="w-4 h-4" />
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button onClick={() => onNavigateHub('hub-overview')} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#F31635] to-[#D40D36] px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-rose-900/20 transition hover:-translate-y-0.5 hover:shadow-xl">
+                ดูข้อมูลโครงการ <ArrowRight className="h-4 w-4" />
               </button>
-
-              <button
-                onClick={() => onNavigateHub('hub-operations')}
-                className="px-5 py-3 rounded-2xl bg-white/80 hover:bg-white text-[#32145C] border border-purple-200 text-xs sm:text-sm font-bold shadow-xs flex items-center gap-2 transition-all hover:border-purple-300"
-              >
-                <span>สื่อการเรียนรู้</span>
-                <span className="text-base">📖</span>
+              <button onClick={() => onNavigateHub('hub-operations')} className="inline-flex items-center gap-2 rounded-full border border-[#2449D8]/50 bg-white/95 px-5 py-3 text-sm font-extrabold text-[#14265D] shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
+                <BookOpen className="h-4 w-4" /> สื่อการเรียนรู้
               </button>
-
               <button
+                type="button"
                 onClick={() => setShowSheetsConfirm(true)}
                 disabled={isExporting}
-                className="px-4 py-3 rounded-2xl bg-[#32145C] hover:bg-[#250E42] text-[#FFE082] text-xs font-bold shadow-xs flex items-center gap-2 transition-colors ml-auto sm:ml-0"
                 title="ส่งออก Google Sheets"
+                aria-label="ส่งออก Google Sheets"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/90 bg-white/85 text-[#5B2A86] shadow-sm transition hover:bg-white disabled:cursor-wait disabled:opacity-60"
               >
-                <FileSpreadsheet className="w-4 h-4 text-[#D6B15E]" />
-                <span className="hidden sm:inline">{isExporting ? 'กำลังซิงค์...' : 'ส่งออก Sheets'}</span>
+                <FileSpreadsheet className="h-4 w-4" />
               </button>
             </div>
           </div>
-
-          {/* Right 3D Visual Mascot & Students Composition (5 cols) */}
-          <div className="lg:col-span-5 flex justify-center items-center relative">
-            {/* Thought speech bubble "คิดดี เลือกได้ ชีวิตสดใส" */}
-            <div className="absolute -top-6 right-2 sm:right-6 bg-white/95 rounded-2xl p-2.5 sm:p-3 shadow-md border border-purple-100 flex items-center gap-2 z-20">
-              <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-bold">
-                💡
-              </div>
-              <div className="text-[11px] sm:text-xs font-black text-[#32145C] whitespace-nowrap">
-                คิดดี เลือกได้ <br />
-                <span className="text-[#E11D48]">ชีวิตสดใส</span>
-              </div>
-            </div>
-
-            {/* Main Mascot Card with 3D Illustration */}
-            <div className="relative rounded-3xl p-3 bg-white/70 backdrop-blur-md border border-white shadow-xl flex items-center justify-center">
-              <div className="flex flex-col items-center">
-                <DareElephantMascot size={150} />
-                <div className="mt-1 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1E1B4B] text-white text-[10px] font-bold shadow-xs">
-                  <span className="w-2 h-2 rounded-full bg-[#E11D48]" />
-                  <span>ครูช้าง ตชด. D.A.R.E.</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </section>
 
       {/* 2. TOP 4 METRIC CARDS (Exact match to Mockup) */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <section className="mx-5 -mt-1 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {/* Card 1: โรงเรียนที่เข้าร่วมโครงการ */}
         <div 
           onClick={() => onNavigateHub('hub-registry')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-purple-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-white bg-white p-3 shadow-[0_8px_26px_rgba(42,36,98,0.07)] transition-all hover:border-purple-300 hover:shadow-lg group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#8B5CF6] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#8B5CF6] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <Building2 className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xs text-[#64748B] font-medium">โรงเรียนที่เข้าร่วมโครงการ</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">3,250</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +12%</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{schools.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">แห่ง ทั่วประเทศ</div>
             </div>
@@ -243,17 +205,16 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 2: ครู D.A.R.E. */}
         <div 
           onClick={() => onNavigateHub('hub-registry')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-rose-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-rose-300 hover:shadow-md group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#EF4444] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#EF4444] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <User className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xs text-[#64748B] font-medium">ครู D.A.R.E.</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">5,840</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +8%</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{personnel.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">นาย / นาง / คน</div>
             </div>
@@ -266,17 +227,16 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 3: นักเรียนที่ได้รับความรู้ */}
         <div 
           onClick={() => onNavigateHub('hub-operations')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-blue-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-blue-300 hover:shadow-md group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#3B82F6] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#3B82F6] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <Users className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xs text-[#64748B] font-medium">นักเรียนที่ได้รับความรู้</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">412,600</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +15%</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{totalStudentsReached.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">คน</div>
             </div>
@@ -289,19 +249,18 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 4: สื่อการเรียนรู้ */}
         <div 
           onClick={() => onNavigateHub('hub-operations')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-amber-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-amber-300 hover:shadow-md group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#F59E0B] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#F59E0B] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <BookOpen className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xs text-[#64748B] font-medium">สื่อการเรียนรู้</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">235</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +20%</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{news.length.toLocaleString()}</span>
               </div>
-              <div className="text-[11px] text-[#94A3B8] font-normal">รายการ</div>
+              <div className="text-[11px] text-[#94A3B8] font-normal">รายการข่าวและสื่อ</div>
             </div>
           </div>
           <div className="w-7 h-7 rounded-full bg-gray-50 group-hover:bg-amber-100 group-hover:text-[#F59E0B] flex items-center justify-center text-gray-400 transition-colors shrink-0">
@@ -311,9 +270,9 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       </section>
 
       {/* 3. MIDDLE SECTION: กิจกรรมล่าสุด (Left) & สื่อการเรียนรู้ยอดนิยม (Right) */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <section className="mx-5 grid grid-cols-1 gap-3 xl:grid-cols-12">
         {/* Left Column: กิจกรรมล่าสุด (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-3xl p-6 border border-[#E7E0EF] shadow-sm space-y-4">
+        <div className="rounded-[22px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-4 xl:col-span-8 space-y-3">
           <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
             <h2 className="text-base font-bold text-[#1E293B] flex items-center gap-2">
               <span className="text-amber-500">⭐️</span>
@@ -328,15 +287,15 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
             {/* Featured Activity Carousel (7 cols) */}
-            <div className="md:col-span-7 rounded-2xl overflow-hidden border border-gray-100 relative group flex flex-col justify-end bg-gray-900 min-h-[220px]">
+            <div className="relative group flex min-h-[220px] flex-col justify-end overflow-hidden rounded-xl bg-slate-800 lg:col-span-7">
               <img
                 src={featuredSlides[carouselIndex].imageUrl}
                 alt={featuredSlides[carouselIndex].title}
-                className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.03]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080d25]/95 via-[#080d25]/35 to-transparent" />
 
               {/* Tag Badge */}
               <div className="absolute top-3 left-3 z-10">
@@ -393,7 +352,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             </div>
 
             {/* List of 3 Activity items (5 cols) */}
-            <div className="md:col-span-5 flex flex-col justify-between space-y-2">
+            <div className="flex flex-col gap-2.5 lg:col-span-5">
               {[
                 {
                   id: 'item-1',
@@ -420,12 +379,12 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
                 <div
                   key={act.id}
                   onClick={() => onNavigateHub('hub-operations')}
-                  className="p-2.5 rounded-xl border border-gray-100 hover:border-purple-200 hover:bg-purple-50/30 transition-all flex items-center justify-between gap-3 cursor-pointer group"
+                  className="group flex min-h-[68px] items-center gap-3 rounded-xl border border-[#EAECF5] p-2 text-left transition hover:border-purple-200 hover:bg-purple-50/40"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <img src={act.img} alt={act.title} className="w-12 h-12 rounded-lg object-cover shrink-0" />
+                    <img src={act.img} alt={act.title} className="h-12 w-12 shrink-0 rounded-lg object-cover sm:h-14 sm:w-14" />
                     <div className="min-w-0">
-                      <div className="text-xs font-bold text-[#1E293B] group-hover:text-[#7C3AED] truncate transition-colors">
+                      <div className="line-clamp-2 block text-xs font-bold leading-snug text-[#172554] transition group-hover:text-purple-700 sm:text-sm">
                         {act.title}
                       </div>
                       <div className="text-[10px] text-[#64748B] flex items-center gap-2 mt-0.5">
@@ -443,7 +402,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
 
         {/* Right Column: สื่อการเรียนรู้ยอดนิยม (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-[#E7E0EF] shadow-sm space-y-4">
+        <div className="space-y-3 rounded-[22px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-4 xl:col-span-4">
           <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
             <h2 className="text-base font-bold text-[#1E293B] flex items-center gap-2">
               <span className="text-[#8B5CF6]">📢</span>
@@ -540,9 +499,9 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       </section>
 
       {/* 4. BOTTOM ANALYTICS & CALENDAR STRIP (3 Boxes) */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <section className="mx-5 grid grid-cols-1 gap-4 xl:grid-cols-12">
         {/* Box 1: แผนที่โรงเรียนที่เข้าร่วม (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-[#E7E0EF] shadow-sm space-y-4 flex flex-col justify-between">
+        <div className="rounded-[22px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-4 xl:col-span-4">
           <div>
             <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
               <h3 className="text-sm font-bold text-[#1E293B] flex items-center gap-2">
@@ -558,10 +517,10 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               </button>
             </div>
 
-            <div className="grid grid-cols-12 gap-3 items-center pt-3">
+            <div className="grid grid-cols-12 items-center gap-2 pt-2">
               {/* Thailand map stylized graphic (5 cols) */}
-              <div className="col-span-5 relative flex justify-center">
-                <svg viewBox="0 0 100 160" className="w-24 h-auto drop-shadow-sm">
+              <div className="col-span-4 flex justify-center">
+                <svg viewBox="0 0 100 160" className="h-auto w-full max-w-[105px] drop-shadow-sm">
                   {/* Thailand Map Silhouette */}
                   <path
                     d="M 40 10 C 55 12, 70 20, 65 35 C 75 40, 85 50, 75 65 C 65 75, 55 70, 50 85 C 45 95, 42 120, 40 145 C 38 155, 34 158, 32 150 C 30 135, 36 100, 32 80 C 25 70, 20 50, 25 35 C 30 20, 35 15, 40 10 Z"
@@ -580,7 +539,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               </div>
 
               {/* Regional breakdown table (7 cols) */}
-              <div className="col-span-7 space-y-1.5 text-xs">
+              <div className="col-span-8 space-y-2">
                 {[
                   { region: 'ภาคเหนือ', count: '620' },
                   { region: 'ภาคตะวันออกเฉียงเหนือ', count: '980' },
@@ -589,7 +548,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
                   { region: 'ภาคตะวันออก', count: '310' },
                   { region: 'ภาคตะวันตก', count: '190' },
                 ].map((r, idx) => (
-                  <div key={idx} className="flex items-center justify-between text-[11px] text-[#475569] border-b border-gray-50 pb-1">
+                  <div key={idx} className="flex items-center justify-between gap-2 border-b border-slate-50 pb-1.5 text-[10px] sm:text-xs">
                     <span className="font-medium truncate">{r.region}</span>
                     <span className="font-bold text-[#1E293B] tabular-nums whitespace-nowrap">{r.count} โรงเรียน</span>
                   </div>
@@ -600,7 +559,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
 
         {/* Box 2: สถิตินักเรียนรายปี (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-[#E7E0EF] shadow-sm space-y-4 flex flex-col justify-between">
+        <div className="flex flex-col justify-between space-y-3 rounded-[22px] border border-white bg-white p-4 shadow-[0_12px_36px_rgba(42,36,98,0.08)] sm:p-4 xl:col-span-4">
           <div>
             <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
               <h3 className="text-sm font-bold text-[#1E293B] flex items-center gap-2">
@@ -618,40 +577,31 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
 
             {/* Peak Count Badge */}
             <div className="text-right pt-2">
-              <span className="text-sm font-black text-[#1E293B] tabular-nums">412,600</span>
-              <span className="text-[10px] text-gray-500 block">ยอดสะสมปี 2569</span>
+              <span className="text-sm font-black text-[#1E293B] tabular-nums">{totalStudentsReached.toLocaleString()}</span>
+              <span className="text-[10px] text-gray-500 block">ยอดนักเรียนจากกิจกรรมที่บันทึก</span>
             </div>
 
             {/* Bar Chart */}
-            <div className="pt-4 flex items-end justify-between gap-2 h-36">
-              {[
-                { year: '2565', count: '120,500', heightPct: 30 },
-                { year: '2566', count: '245,300', heightPct: 50 },
-                { year: '2567', count: '318,400', heightPct: 70 },
-                { year: '2568', count: '389,200', heightPct: 85 },
-                { year: '2569', count: '412,600', heightPct: 100 },
-              ].map((item, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
-                  <span className="text-[9px] text-gray-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity tabular-nums">
-                    {item.count}
+            <div className="flex h-[152px] items-end justify-between gap-2 border-b border-slate-200 px-2 pt-2">
+              {yearlyStudentStats.length > 0 ? yearlyStudentStats.map(([year, count], idx) => (
+                <div key={year} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+                  <span className="text-[10px] font-bold text-slate-500 opacity-0 transition group-hover:opacity-100">
+                    {count.toLocaleString()}
                   </span>
-                  <div 
-                    style={{ height: `${item.heightPct}%` }}
-                    className={`w-full max-w-[28px] rounded-t-lg transition-all ${
-                      item.year === '2569' 
-                        ? 'bg-[#6D28D9] shadow-sm shadow-purple-900/20' 
-                        : 'bg-[#A78BFA] group-hover:bg-[#8B5CF6]'
-                    }`}
+                  <div
+                    style={{ height: `${Math.max(8, (count / maxYearlyStudents) * 100)}%` }}
+                    className={`w-full max-w-[48px] rounded-t-xl transition-all ${idx === yearlyStudentStats.length - 1 ? 'bg-gradient-to-t from-[#6D28D9] to-[#8B5CF6]' : 'bg-gradient-to-t from-[#9698FA] to-[#7367F0]'}`}
+                    title={`${year}: ${count.toLocaleString()} คน`}
                   />
-                  <span className="text-[10px] font-bold text-[#64748B] mt-1">{item.year}</span>
+                  <span className="pb-2 text-[10px] font-semibold text-slate-500 sm:text-xs">{year}</span>
                 </div>
-              ))}
+              )) : <div className="w-full flex items-center justify-center text-xs text-[#94A3B8]">ยังไม่มีข้อมูลกิจกรรมสำหรับสถิติรายปี</div>}
             </div>
           </div>
         </div>
 
         {/* Box 3: ปฏิทินกิจกรรม (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-[#E7E0EF] shadow-sm space-y-4 flex flex-col justify-between">
+        <div className="rounded-[22px] border border-[#E7E0EF] bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-4 xl:col-span-4">
           <div>
             <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
               <h3 className="text-sm font-bold text-[#1E293B] flex items-center gap-2">
@@ -667,7 +617,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               </button>
             </div>
 
-            <div className="space-y-3.5 pt-3">
+            <div className="space-y-2.5 pt-1 sm:space-y-3.5">
               {[
                 {
                   day: '17',
@@ -694,15 +644,15 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
                   className="flex items-start gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   {/* Date badge */}
-                  <div className="w-11 h-11 rounded-xl bg-purple-50 border border-purple-100 flex flex-col items-center justify-center text-center shrink-0">
-                    <span className="text-sm font-black text-[#6D28D9] leading-none">{ev.day}</span>
-                    <span className="text-[9px] text-[#64748B] font-medium mt-0.5">{ev.month}</span>
+                  <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border border-purple-100 bg-purple-50">
+                    <span className="text-base font-black leading-none text-purple-700">{ev.day}</span>
+                    <span className="mt-1 text-[9px] font-medium text-slate-500">{ev.month}</span>
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#1E293B] hover:text-[#7C3AED] transition-colors">
+                    <div className="block text-xs font-bold leading-snug text-[#172554] sm:text-sm">
                       • {ev.title}
                     </div>
-                    <div className="text-[11px] text-[#94A3B8] ml-2 mt-0.5">
+                    <div className="mt-1 block text-[10px] text-slate-400 sm:text-xs">
                       {ev.location}
                     </div>
                   </div>

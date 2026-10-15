@@ -18,7 +18,6 @@ import {
   Search,
   Bell,
   Globe,
-  RefreshCw,
   LogOut,
   ShieldCheck,
   Menu,
@@ -40,11 +39,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   onReturnToPublic,
   children,
 }) => {
-  const { 
-    currentUser, 
-    currentRole, 
-    switchRole, 
-    resetDemoData,
+  const {
+    currentUser,
+    currentRole,
+    switchRole,
     schools,
     personnel
   } = useApp();
@@ -170,40 +168,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F7FD] flex flex-col font-sans text-[#1E293B]">
-      {/* Top Demo Notification Strip */}
-      <div className="bg-[#180A33] text-[#FFE082] px-4 py-1 text-[11px] font-medium flex items-center justify-between border-b border-purple-900/60 z-50">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-          <span>ระบบบริหารจัดการโครงการ D.A.R.E. Thailand กองบัญชาการตำรวจตระเวนชายแดน (สภาพแวดล้อมจำลอง)</span>
-        </div>
-        <div className="hidden sm:flex items-center gap-3 text-purple-200 text-[10px]">
-          <button 
-            onClick={resetDemoData}
-            className="flex items-center gap-1 hover:text-white transition-colors underline"
-          >
-            <RefreshCw className="w-2.5 h-2.5" />
-            <span>คืนค่าข้อมูลจำลอง</span>
-          </button>
-          <span>|</span>
-          <button onClick={onReturnToPublic} className="hover:text-white flex items-center gap-1">
-            <Globe className="w-2.5 h-2.5 text-[#D6B15E]" />
-            <span>หน้าเว็บสาธารณะ</span>
-          </button>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-[#F2F7FC] flex flex-col font-sans text-[#1E293B]">
       {/* Main Container (Sidebar + Content Viewport) */}
       <div className="flex-1 flex overflow-hidden">
         {/* Desktop Left Sidebar (Matching Mockup 10 Items + Mascot) */}
-        <aside className="hidden md:flex flex-col w-60 bg-[#160B2E] text-white shrink-0 border-r border-purple-900/40 select-none overflow-y-auto">
+        <aside className="hidden md:flex flex-col w-[204px] bg-[#142252] text-white shrink-0 border-r border-[#0F1A43] select-none overflow-y-auto">
           {/* Top Brand Logo */}
-          <div className="p-4 border-b border-purple-900/40 flex items-center justify-center">
-            <DareLogo className="h-10" />
+          <div className="h-[128px] shrink-0 bg-white flex items-center justify-center px-3 py-2 shadow-sm">
+            <DareLogo className="h-[108px] w-full justify-center" />
           </div>
 
           {/* 10 Navigation Items */}
-          <div className="py-4 px-3 space-y-1.5 flex-1">
+          <div className="py-4 px-3 space-y-1.5 flex-1 bg-gradient-to-b from-[#142252] to-[#101A45]">
             {menuItems.map((item) => {
               const active = isMenuItemActive(item);
               const Icon = item.icon;
@@ -211,10 +187,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all text-left ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-[13px] font-medium transition-all text-left ${
                     active
-                      ? 'bg-[#6D28D9] text-white shadow-md shadow-purple-900/50'
-                      : 'text-purple-200/80 hover:text-white hover:bg-white/5'
+                      ? 'bg-gradient-to-r from-[#7C45FF] to-[#6044F5] text-white shadow-md shadow-indigo-950/30'
+                      : 'text-indigo-100/85 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-white' : 'text-purple-300'}`} />
@@ -235,15 +211,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               className="fixed inset-0 bg-black/60 backdrop-blur-xs"
               onClick={() => setMobileSidebarOpen(false)}
             />
-            <div className="relative w-72 bg-[#160B2E] text-white flex flex-col h-full shadow-2xl z-10 overflow-y-auto">
-              <div className="p-4 border-b border-purple-900 flex items-center justify-between">
-                <DareLogo className="h-9" />
+            <div className="relative w-72 bg-[#142252] text-white flex flex-col h-full shadow-2xl z-10 overflow-y-auto">
+              <div className="h-[112px] bg-white px-3 py-2 flex items-center justify-between">
+                <DareLogo className="h-[96px] w-full justify-center" />
                 <button onClick={() => setMobileSidebarOpen(false)} className="text-gray-400 hover:text-white">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="py-3 px-3 space-y-1 flex-1">
+              <div className="py-3 px-3 space-y-1 flex-1 bg-gradient-to-b from-[#142252] to-[#101A45]">
                 {menuItems.map((item) => {
                   const active = isMenuItemActive(item);
                   const Icon = item.icon;
@@ -251,8 +227,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     <button
                       key={item.id}
                       onClick={() => handleMenuClick(item)}
-                      className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-left transition-all ${
-                        active ? 'bg-[#6D28D9] text-white' : 'text-purple-200/80 hover:bg-white/5'
+                      className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-[13px] font-medium text-left transition-all ${
+                        active ? 'bg-gradient-to-r from-[#7C45FF] to-[#6044F5] text-white' : 'text-indigo-100/85 hover:bg-white/10'
                       }`}
                     >
                       <Icon className="w-4 h-4 shrink-0" />
@@ -268,9 +244,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <div className="relative flex-1 flex flex-col min-w-0 overflow-y-auto">
           {/* Top Bar matching Mockup */}
-          <header className="h-18 bg-white border-b border-[#E7E0EF] shadow-2xs px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30">
+          <header className="absolute inset-x-0 top-0 z-30 flex h-[76px] shrink-0 items-center justify-between border-b border-white/60 bg-white/35 px-4 shadow-sm backdrop-blur-[3px] sm:px-6 xl:px-7">
             {/* Left: Mobile Toggle & Official Title */}
             <div className="flex items-center gap-3 min-w-0">
               <button
@@ -290,7 +266,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             </div>
 
             {/* Center: Large Interactive Search Bar */}
-            <div className="hidden md:block relative max-w-md w-full mx-6">
+            <div className="hidden md:block relative max-w-[400px] w-full mx-6">
               <div className="relative">
                 <Search className="w-4 h-4 text-gray-400 absolute left-4 top-3" />
                 <input
@@ -298,7 +274,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   value={globalSearch}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="ค้นหาโรงเรียน ครู D.A.R.E. สื่อการสอน ..."
-                  className="w-full pl-11 pr-4 py-2.5 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-full focus:outline-none focus:bg-white focus:border-[#7C3AED] transition-all shadow-inner"
+                  className="w-full rounded-full border border-white/90 bg-white/75 py-3 pl-11 pr-4 text-xs shadow-sm transition-all placeholder:text-slate-500 focus:border-[#7C3AED] focus:bg-white focus:outline-none"
                 />
               </div>
 
@@ -436,7 +412,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </header>
 
           {/* Main Viewport Content */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <main className="flex-1 min-w-0 p-0">
             {children}
           </main>
         </div>
