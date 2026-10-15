@@ -85,41 +85,53 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+// Browser storage is only a demo persistence layer; corrupted or unavailable storage
+// must not prevent the public site and dashboard from rendering.
+const readLocalState = <T,>(key: string, fallback: T): T => {
+  try {
+    const saved = window.localStorage.getItem(key);
+    return saved ? (JSON.parse(saved) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const persistLocalState = (key: string, value: unknown) => {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Keep the current session usable if browser storage is blocked or full.
+  }
+};
+
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // State with LocalStorage persistence for demo interactivity
   const [organizations, setOrganizations] = useState<Organization[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_organizations');
-    return saved ? JSON.parse(saved) : INITIAL_ORGANIZATIONS;
+    return readLocalState('dare_bpp_organizations', INITIAL_ORGANIZATIONS);
   });
 
   const [personnel, setPersonnel] = useState<Personnel[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_personnel');
-    return saved ? JSON.parse(saved) : INITIAL_PERSONNEL;
+    return readLocalState('dare_bpp_personnel', INITIAL_PERSONNEL);
   });
 
   const [schools, setSchools] = useState<School[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_schools');
-    return saved ? JSON.parse(saved) : INITIAL_SCHOOLS;
+    return readLocalState('dare_bpp_schools', INITIAL_SCHOOLS);
   });
 
   const [assignments, setAssignments] = useState<Assignment[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_assignments');
-    return saved ? JSON.parse(saved) : INITIAL_ASSIGNMENTS;
+    return readLocalState('dare_bpp_assignments', INITIAL_ASSIGNMENTS);
   });
 
   const [activities, setActivities] = useState<Activity[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_activities');
-    return saved ? JSON.parse(saved) : INITIAL_ACTIVITIES;
+    return readLocalState('dare_bpp_activities', INITIAL_ACTIVITIES);
   });
 
   const [news, setNews] = useState<MediaNews[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_news');
-    return saved ? JSON.parse(saved) : INITIAL_NEWS;
+    return readLocalState('dare_bpp_news', INITIAL_NEWS);
   });
 
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>(() => {
-    const saved = localStorage.getItem('dare_bpp_audit_logs');
-    return saved ? JSON.parse(saved) : INITIAL_AUDIT_LOGS;
+    return readLocalState('dare_bpp_audit_logs', INITIAL_AUDIT_LOGS);
   });
 
   // User and Role
@@ -131,31 +143,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync to local storage
   useEffect(() => {
-    localStorage.setItem('dare_bpp_organizations', JSON.stringify(organizations));
+    persistLocalState('dare_bpp_organizations', organizations);
   }, [organizations]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_personnel', JSON.stringify(personnel));
+    persistLocalState('dare_bpp_personnel', personnel);
   }, [personnel]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_schools', JSON.stringify(schools));
+    persistLocalState('dare_bpp_schools', schools);
   }, [schools]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_assignments', JSON.stringify(assignments));
+    persistLocalState('dare_bpp_assignments', assignments);
   }, [assignments]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_activities', JSON.stringify(activities));
+    persistLocalState('dare_bpp_activities', activities);
   }, [activities]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_news', JSON.stringify(news));
+    persistLocalState('dare_bpp_news', news);
   }, [news]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_audit_logs', JSON.stringify(auditLogs));
+    persistLocalState('dare_bpp_audit_logs', auditLogs);
   }, [auditLogs]);
 
   // Firebase auth initialization listener
@@ -432,7 +444,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Activity actions
   const createActivity = (data: Omit<Activity, 'id' | 'code' | 'createdAt' | 'updatedAt'>) => {
-    const code = `ACT-68-${(activities.length + 1).toString().padStart(3, '0')}`;
+    const [activityYear, activityMonth] = data.date.split('-').map(Number);
+    const fiscalYear = activityYear + (activityMonth >= 10 ? 544 : 543);
+    const code = `ACT-${String(fiscalYear).slice(-2)}-${(activities.length + 1).toString().padStart(3, '0')}`;
     const now = new Date().toISOString().split('T')[0];
     const newAct: Activity = {
       ...data,

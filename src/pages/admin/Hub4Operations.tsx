@@ -40,7 +40,10 @@ export const Hub4Operations: React.FC = () => {
   const [viewMode, setViewMode] = useState<'calendar' | 'approvals'>('calendar');
 
   // Calendar State
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 1)); // May 2025
+  const [currentDate, setCurrentDate] = useState(() => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), 1);
+  });
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
   // Filter in Approval Desk
@@ -58,7 +61,7 @@ export const Hub4Operations: React.FC = () => {
     personnelIds: [personnel[0]?.id || ''],
     instructorNames: [`${personnel[0]?.rank} ${personnel[0]?.firstName} ${personnel[0]?.lastName}`],
     organizationId: organizations[0]?.id || '',
-    date: '2025-05-20',
+    date: new Date().toISOString().slice(0, 10),
     startTime: '09:00',
     endTime: '11:00',
     targetGrade: 'ป.5',
@@ -126,7 +129,10 @@ export const Hub4Operations: React.FC = () => {
       photoUrls: [
         'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80'
       ],
-      fiscalYear: '2568'
+      fiscalYear: (() => {
+        const [year, month] = formData.date.split('-').map(Number);
+        return String(year + (month >= 10 ? 544 : 543));
+      })()
     });
     setShowAddModal(false);
   };

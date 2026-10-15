@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Personnel, School, Organization, PersonnelStatus, SchoolType } from '../../types';
 import { 
@@ -23,7 +23,11 @@ import {
 } from 'lucide-react';
 import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
 
-export const Hub2Registry: React.FC = () => {
+interface Hub2RegistryProps {
+  initialTab?: 'personnel' | 'schools' | 'units';
+}
+
+export const Hub2Registry: React.FC<Hub2RegistryProps> = ({ initialTab = 'personnel' }) => {
   const { 
     personnel, 
     schools, 
@@ -40,7 +44,13 @@ export const Hub2Registry: React.FC = () => {
   } = useApp();
 
   // Active Sub-Tab: 'personnel' | 'schools' | 'units'
-  const [activeTab, setActiveTab] = useState<'personnel' | 'schools' | 'units'>('personnel');
+  const [activeTab, setActiveTab] = useState<'personnel' | 'schools' | 'units'>(initialTab);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+    setSearchQuery('');
+    setFilterOption('all');
+  }, [initialTab]);
 
   // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -253,7 +263,7 @@ export const Hub2Registry: React.FC = () => {
 
       {/* Modern Segmented Control Bar */}
       <div className="flex items-center justify-between gap-4 flex-wrap bg-white p-2 rounded-xl border border-[#EAE5F2] shadow-2xs">
-        <div className="flex items-center gap-1 bg-[#FAF9FD] p-1 rounded-lg border border-[#EAE5F2]">
+        <div className="flex flex-wrap items-center gap-1 bg-[#FAF9FD] p-1 rounded-lg border border-[#EAE5F2]">
           <button
             onClick={() => {
               setActiveTab('personnel');
