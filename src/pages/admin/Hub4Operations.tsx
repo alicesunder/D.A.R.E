@@ -129,7 +129,10 @@ export const Hub4Operations: React.FC = () => {
       photoUrls: [
         'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80'
       ],
-      fiscalYear: '2568'
+      fiscalYear: (() => {
+        const [year, month] = formData.date.split('-').map(Number);
+        return String(year + (month >= 10 ? 544 : 543));
+      })()
     });
     setShowAddModal(false);
   };
