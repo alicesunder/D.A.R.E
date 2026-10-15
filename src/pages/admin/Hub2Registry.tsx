@@ -263,7 +263,7 @@ export const Hub2Registry: React.FC<Hub2RegistryProps> = ({ initialTab = 'person
 
       {/* Modern Segmented Control Bar */}
       <div className="flex items-center justify-between gap-4 flex-wrap bg-white p-2 rounded-xl border border-[#EAE5F2] shadow-2xs">
-        <div className="flex items-center gap-1 bg-[#FAF9FD] p-1 rounded-lg border border-[#EAE5F2]">
+        <div className="flex flex-wrap items-center gap-1 bg-[#FAF9FD] p-1 rounded-lg border border-[#EAE5F2]">
           <button
             onClick={() => {
               setActiveTab('personnel');
