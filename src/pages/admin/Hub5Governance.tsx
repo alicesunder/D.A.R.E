@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { MediaNews, UserRole } from '../../types';
 import { 
@@ -23,7 +23,11 @@ import {
 import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
 import { BppLogo, DareLogo } from '../../components/ui/Logos';
 
-export const Hub5Governance: React.FC = () => {
+interface Hub5GovernanceProps {
+  initialTab?: 'reports' | 'news' | 'rbac' | 'audit';
+}
+
+export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 'reports' }) => {
   const { 
     activities, 
     schools, 
@@ -42,7 +46,11 @@ export const Hub5Governance: React.FC = () => {
   } = useApp();
 
   // Active sub-tab
-  const [activeTab, setActiveTab] = useState<'reports' | 'news' | 'rbac' | 'audit'>('reports');
+  const [activeTab, setActiveTab] = useState<'reports' | 'news' | 'rbac' | 'audit'>(initialTab);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   // Reports state
   const [reportType, setReportType] = useState<'overall' | 'unit' | 'schools'>('overall');
