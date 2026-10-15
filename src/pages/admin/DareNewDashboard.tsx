@@ -26,6 +26,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
   const { 
     schools, 
     personnel, 
+    organizations,
     activities, 
     news,
     exportActivitiesToGoogleSheets
