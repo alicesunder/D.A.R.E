@@ -56,7 +56,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
 
   // Reports state
   const [reportType, setReportType] = useState<'overall' | 'unit' | 'schools'>('overall');
-  const [selectedFiscalYear, setSelectedFiscalYear] = useState('2568');
+  const [selectedFiscalYear, setSelectedFiscalYear] = useState('2570');
 
   // News CMS filter & search
   const [newsSearch, setNewsSearch] = useState('');
@@ -284,6 +284,8 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
                 onChange={(e) => setSelectedFiscalYear(e.target.value)}
                 className="px-3 py-1.5 text-xs border border-[#E7E0EF] rounded-xl text-[#211A2B] focus:outline-none"
               >
+                <option value="2570">ปีงบประมาณ 2570 (ปัจจุบัน)</option>
+                <option value="2569">ปีงบประมาณ 2569</option>
                 <option value="2568">ปีงบประมาณ 2568</option>
                 <option value="2567">ปีงบประมาณ 2567</option>
               </select>
