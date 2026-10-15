@@ -183,95 +183,28 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
       </section>
 
-      {/* 2. TOP 4 METRIC CARDS (Exact match to Mockup) */}
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {/* Card 1: โรงเรียนที่เข้าร่วมโครงการ */}
-        <div 
-          onClick={() => onNavigateHub('hub-registry')}
-          className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#EAE5F2] bg-white p-4 shadow-[0_8px_26px_rgba(37,14,66,0.06)] transition-all hover:border-purple-300 hover:shadow-lg group"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#8B5CF6] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
-              <Building2 className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-xs text-[#64748B] font-medium">โรงเรียนที่เข้าร่วมโครงการ</div>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{schools.length.toLocaleString()}</span>
-              </div>
-              <div className="text-[11px] text-[#94A3B8] font-normal">แห่ง ทั่วประเทศ</div>
-            </div>
-          </div>
-          <div className="w-7 h-7 rounded-full bg-gray-50 group-hover:bg-purple-100 group-hover:text-[#7C3AED] flex items-center justify-center text-gray-400 transition-colors shrink-0">
-            <ChevronRight className="w-4 h-4" />
-          </div>
-        </div>
-
-        {/* Card 2: ครู D.A.R.E. */}
-        <div 
-          onClick={() => onNavigateHub('hub-registry')}
-          className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#EAE5F2] bg-white p-4 shadow-[0_8px_26px_rgba(37,14,66,0.06)] transition-all hover:border-rose-300 hover:shadow-md group"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#EF4444] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
-              <User className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-xs text-[#64748B] font-medium">ครู D.A.R.E.</div>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{personnel.length.toLocaleString()}</span>
-              </div>
-              <div className="text-[11px] text-[#94A3B8] font-normal">นาย / นาง / คน</div>
-            </div>
-          </div>
-          <div className="w-7 h-7 rounded-full bg-gray-50 group-hover:bg-rose-100 group-hover:text-[#EF4444] flex items-center justify-center text-gray-400 transition-colors shrink-0">
-            <ChevronRight className="w-4 h-4" />
-          </div>
-        </div>
-
-        {/* Card 3: นักเรียนที่ได้รับความรู้ */}
-        <div 
-          onClick={() => onNavigateHub('hub-operations')}
-          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-blue-300 hover:shadow-md group"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#3B82F6] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
-              <Users className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-xs text-[#64748B] font-medium">นักเรียนที่ได้รับความรู้</div>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{totalStudentsReached.toLocaleString()}</span>
-              </div>
-              <div className="text-[11px] text-[#94A3B8] font-normal">คน</div>
-            </div>
-          </div>
-          <div className="w-7 h-7 rounded-full bg-gray-50 group-hover:bg-blue-100 group-hover:text-[#3B82F6] flex items-center justify-center text-gray-400 transition-colors shrink-0">
-            <ChevronRight className="w-4 h-4" />
-          </div>
-        </div>
-
-        {/* Card 4: สื่อการเรียนรู้ */}
-        <div 
-          onClick={() => onNavigateHub('hub-operations')}
-          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-amber-300 hover:shadow-md group"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#F59E0B] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-xs text-[#64748B] font-medium">สื่อการเรียนรู้</div>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{news.length.toLocaleString()}</span>
-              </div>
-              <div className="text-[11px] text-[#94A3B8] font-normal">รายการข่าวและสื่อ</div>
-            </div>
-          </div>
-          <div className="w-7 h-7 rounded-full bg-gray-50 group-hover:bg-amber-100 group-hover:text-[#F59E0B] flex items-center justify-center text-gray-400 transition-colors shrink-0">
-            <ChevronRight className="w-4 h-4" />
-          </div>
-        </div>
+      {/* 2. TOP 4 METRIC CARDS — real values, aligned to the directory design */}
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+        <button type="button" onClick={() => onNavigateHub('hub-registry')} className="group flex min-h-[112px] items-center gap-4 overflow-hidden rounded-2xl border border-[#6D28D9] bg-gradient-to-br from-[#6D28D9] via-[#5B2A86] to-[#3A1765] p-4 text-left text-white shadow-[0_12px_28px_rgba(91,42,134,0.2)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(91,42,134,0.28)]">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15"><Users className="h-7 w-7" /></span>
+          <span className="min-w-0 flex-1"><span className="block text-sm font-medium text-white/80">ครู D.A.R.E. ทั้งหมด</span><span className="mt-1 block text-3xl font-black leading-none tabular-nums">{personnel.length.toLocaleString()} <span className="text-sm font-semibold">คน</span></span><span className="mt-2 block text-[11px] text-white/70">ทะเบียนครูในระบบ</span></span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-white/65 transition group-hover:translate-x-1" />
+        </button>
+        <button type="button" onClick={() => onNavigateHub('hub-registry')} className="group flex min-h-[112px] items-center gap-4 rounded-2xl border border-[#E8E2F0] bg-white p-4 text-left shadow-[0_6px_22px_rgba(37,14,66,0.05)] transition duration-200 hover:-translate-y-0.5 hover:border-[#C9B5ED] hover:shadow-[0_12px_26px_rgba(37,14,66,0.09)]">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#EEE7FB] text-[#6D28D9]"><Building2 className="h-7 w-7" /></span>
+          <span className="min-w-0 flex-1"><span className="block text-sm font-medium text-[#777184]">หน่วยงานที่เข้าร่วม</span><span className="mt-1 block text-3xl font-black leading-none text-[#291447] tabular-nums">{organizations.length.toLocaleString()} <span className="text-sm font-semibold">หน่วย</span></span><span className="mt-2 block text-[11px] text-[#9690A3]">หน่วยงานในทะเบียน</span></span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-[#B3A7C7] transition group-hover:translate-x-1 group-hover:text-[#6D28D9]" />
+        </button>
+        <button type="button" onClick={() => onNavigateHub('hub-registry')} className="group flex min-h-[112px] items-center gap-4 rounded-2xl border border-[#E8E2F0] bg-white p-4 text-left shadow-[0_6px_22px_rgba(37,14,66,0.05)] transition duration-200 hover:-translate-y-0.5 hover:border-[#C9B5ED] hover:shadow-[0_12px_26px_rgba(37,14,66,0.09)]">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#F0E8FF] text-[#7C3AED]"><MapPin className="h-7 w-7" /></span>
+          <span className="min-w-0 flex-1"><span className="block text-sm font-medium text-[#777184]">จังหวัดที่มีครู</span><span className="mt-1 block text-3xl font-black leading-none text-[#291447] tabular-nums">{new Set(personnel.map(p => p.province?.trim()).filter(Boolean)).size.toLocaleString()} <span className="text-sm font-semibold">จังหวัด</span></span><span className="mt-2 block text-[11px] text-[#9690A3]">จากข้อมูลทะเบียนครู</span></span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-[#B3A7C7] transition group-hover:translate-x-1 group-hover:text-[#6D28D9]" />
+        </button>
+        <button type="button" onClick={() => onNavigateHub('hub-operations')} className="group flex min-h-[112px] items-center gap-4 rounded-2xl border border-[#E8E2F0] bg-white p-4 text-left shadow-[0_6px_22px_rgba(37,14,66,0.05)] transition duration-200 hover:-translate-y-0.5 hover:border-[#E9D29A] hover:shadow-[0_12px_26px_rgba(37,14,66,0.09)]">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#FFF2D8] text-[#B77912]"><GraduationCap className="h-7 w-7" /></span>
+          <span className="min-w-0 flex-1"><span className="block text-sm font-medium text-[#777184]">นักเรียนที่ได้รับการสอน</span><span className="mt-1 block text-3xl font-black leading-none text-[#291447] tabular-nums">{totalStudentsReached.toLocaleString()} <span className="text-sm font-semibold">คน</span></span><span className="mt-2 block text-[11px] text-[#9690A3]">รวมจากกิจกรรมที่บันทึก</span></span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-[#B3A7C7] transition group-hover:translate-x-1 group-hover:text-[#B77912]" />
+        </button>
       </section>
 
       {/* 3. MIDDLE SECTION: กิจกรรมล่าสุด (Left) & สื่อการเรียนรู้ยอดนิยม (Right) */}
