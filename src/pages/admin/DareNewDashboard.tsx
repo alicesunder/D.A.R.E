@@ -148,7 +148,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               สร้างภูมิคุ้มกันให้เด็กไทย
             </h1>
             <div className="mt-2 inline-block">
-              <span className="text-3xl font-black leading-tight tracking-tight text-[#F31635] [text-shadow:0_1px_0_rgba(255,255,255,0.8)] sm:text-4xl xl:text-[54px]">ห่างไกลยาเสพติด</span>
+              <span className="text-3xl font-black leading-tight tracking-tight text-[#F31635] [text-shadow:0_1px_0_rgba(255,255,255,0.8)] sm:text-4xl xl:text-[46px]">ห่างไกลยาเสพติด</span>
               <div className="mt-2 h-[7px] rounded-full bg-gradient-to-r from-[#F31635] via-[#F31635] to-[#2449D8]" />
             </div>
             <p className="mt-4 max-w-xl text-sm font-bold leading-6 text-[#14265D] [text-shadow:0_1px_2px_rgba(255,255,255,0.9)] sm:text-base">
@@ -203,7 +203,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">ครู D.A.R.E.</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">{personnel.length.toLocaleString()}</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{personnel.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">นาย / นาง / คน</div>
             </div>
@@ -225,7 +225,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">นักเรียนที่ได้รับความรู้</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">{totalStudentsReached.toLocaleString()}</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{totalStudentsReached.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">คน</div>
             </div>
@@ -247,7 +247,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">สื่อการเรียนรู้</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">{news.length.toLocaleString()}</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{news.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">รายการข่าวและสื่อ</div>
             </div>
