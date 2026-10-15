@@ -138,7 +138,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
           alt="ครูช้าง D.A.R.E. กำลังสอนนักเรียนในห้องเรียน"
           className="absolute inset-0 h-full w-full object-cover object-[68%_center] sm:object-[68%_center]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F8F5FC]/98 via-[#F8F5FC]/88 to-[#F8F5FC]/12" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#F8F5FC]/94 via-[#F8F5FC]/64 to-[#F8F5FC]/6" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#250E42]/20 via-transparent to-transparent" />
         
         
