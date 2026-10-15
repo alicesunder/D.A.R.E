@@ -31,10 +31,19 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
     schools, 
     personnel, 
     activities, 
+    news,
     exportActivitiesToGoogleSheets,
     exportSchoolsToGoogleSheets,
     exportRosterToGoogleSheets
   } = useApp();
+
+  const totalStudentsReached = activities.reduce((sum, activity) => sum + (activity.studentCount || 0), 0);
+  const yearlyStudentStats = Object.entries(activities.reduce<Record<string, number>>((totals, activity) => {
+    const year = activity.fiscalYear || 'ไม่ระบุ';
+    totals[year] = (totals[year] || 0) + (activity.studentCount || 0);
+    return totals;
+  }, {})).filter(([year]) => year !== 'ไม่ระบุ').sort(([a], [b]) => a.localeCompare(b, 'th')).slice(-5);
+  const maxYearlyStudents = Math.max(1, ...yearlyStudentStats.map(([, count]) => count));
 
   // Carousel slide state for featured activities
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -107,7 +116,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans">
+    <div className="space-y-5 max-w-[1600px] mx-auto pb-12 font-sans text-[#1E1B4B]">
       {/* Google Sheets Export Alert Banner if exported */}
       {exportNotice && (
         <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-purple-900 text-xs flex items-center justify-between shadow-xs">
@@ -129,7 +138,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       )}
 
       {/* 1. HERO BANNER: 3D D.A.R.E. Cartoon Mascot & Thai Students Scene */}
-      <section className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#DCEBFE] via-[#E8F2FE] to-[#F1F6FF] border border-blue-100 shadow-sm p-6 sm:p-10">
+      <section className="relative isolate rounded-[28px] overflow-hidden bg-gradient-to-br from-[#EAF4FF] via-[#F7FAFF] to-[#F3EAFE] border border-white shadow-[0_16px_50px_rgba(42,36,98,0.10)] p-5 sm:p-8 lg:p-9 min-h-[320px]">
         {/* Subtle decorative doodles in background */}
         <div className="absolute top-4 left-6 text-2xl select-none opacity-40">✨</div>
         <div className="absolute top-12 left-1/3 text-xl select-none opacity-40">✈️</div>
@@ -189,7 +198,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
           </div>
 
           {/* Right 3D Visual Mascot & Students Composition (5 cols) */}
-          <div className="lg:col-span-5 flex justify-center items-center relative">
+          <div className="lg:col-span-5 flex justify-center items-center relative min-h-[250px] lg:min-h-[300px]">
             {/* Thought speech bubble "คิดดี เลือกได้ ชีวิตสดใส" */}
             <div className="absolute -top-6 right-2 sm:right-6 bg-white/95 rounded-2xl p-2.5 sm:p-3 shadow-md border border-purple-100 flex items-center gap-2 z-20">
               <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-bold">
@@ -202,9 +211,10 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             </div>
 
             {/* Main Mascot Card with 3D Illustration */}
-            <div className="relative rounded-3xl p-3 bg-white/70 backdrop-blur-md border border-white shadow-xl flex items-center justify-center">
+            <div className="absolute inset-3 rounded-full bg-gradient-to-br from-[#C4B5FD]/50 via-white/30 to-[#93C5FD]/40 blur-2xl" />
+            <div className="relative rounded-[32px] p-4 sm:p-5 bg-white/55 backdrop-blur-md border border-white/80 shadow-[0_18px_45px_rgba(91,42,134,0.18)] flex items-center justify-center">
               <div className="flex flex-col items-center">
-                <DareElephantMascot size={150} />
+                <DareElephantMascot size={210} />
                 <div className="mt-1 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1E1B4B] text-white text-[10px] font-bold shadow-xs">
                   <span className="w-2 h-2 rounded-full bg-[#E11D48]" />
                   <span>ครูช้าง ตชด. D.A.R.E.</span>
@@ -216,7 +226,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       </section>
 
       {/* 2. TOP 4 METRIC CARDS (Exact match to Mockup) */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Card 1: โรงเรียนที่เข้าร่วมโครงการ */}
         <div 
           onClick={() => onNavigateHub('hub-registry')}
@@ -229,8 +239,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">โรงเรียนที่เข้าร่วมโครงการ</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">3,250</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +12%</span>
+                <span className="text-2xl font-black text-[#1E293B]">{schools.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">แห่ง ทั่วประเทศ</div>
             </div>
@@ -252,8 +261,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">ครู D.A.R.E.</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">5,840</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +8%</span>
+                <span className="text-2xl font-black text-[#1E293B]">{personnel.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">นาย / นาง / คน</div>
             </div>
@@ -275,8 +283,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">นักเรียนที่ได้รับความรู้</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">412,600</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +15%</span>
+                <span className="text-2xl font-black text-[#1E293B]">{totalStudentsReached.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">คน</div>
             </div>
@@ -298,10 +305,9 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             <div>
               <div className="text-xs text-[#64748B] font-medium">สื่อการเรียนรู้</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">235</span>
-                <span className="text-[11px] font-bold text-[#16A34A] bg-emerald-50 px-1.5 py-0.5 rounded">↑ +20%</span>
+                <span className="text-2xl font-black text-[#1E293B]">{news.length.toLocaleString()}</span>
               </div>
-              <div className="text-[11px] text-[#94A3B8] font-normal">รายการ</div>
+              <div className="text-[11px] text-[#94A3B8] font-normal">รายการข่าวและสื่อ</div>
             </div>
           </div>
           <div className="w-7 h-7 rounded-full bg-gray-50 group-hover:bg-amber-100 group-hover:text-[#F59E0B] flex items-center justify-center text-gray-400 transition-colors shrink-0">
@@ -618,34 +624,25 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
 
             {/* Peak Count Badge */}
             <div className="text-right pt-2">
-              <span className="text-sm font-black text-[#1E293B] tabular-nums">412,600</span>
-              <span className="text-[10px] text-gray-500 block">ยอดสะสมปี 2569</span>
+              <span className="text-sm font-black text-[#1E293B] tabular-nums">{totalStudentsReached.toLocaleString()}</span>
+              <span className="text-[10px] text-gray-500 block">ยอดนักเรียนจากกิจกรรมที่บันทึก</span>
             </div>
 
             {/* Bar Chart */}
             <div className="pt-4 flex items-end justify-between gap-2 h-36">
-              {[
-                { year: '2565', count: '120,500', heightPct: 30 },
-                { year: '2566', count: '245,300', heightPct: 50 },
-                { year: '2567', count: '318,400', heightPct: 70 },
-                { year: '2568', count: '389,200', heightPct: 85 },
-                { year: '2569', count: '412,600', heightPct: 100 },
-              ].map((item, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+              {yearlyStudentStats.length > 0 ? yearlyStudentStats.map(([year, count], idx) => (
+                <div key={year} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
                   <span className="text-[9px] text-gray-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity tabular-nums">
-                    {item.count}
+                    {count.toLocaleString()}
                   </span>
-                  <div 
-                    style={{ height: `${item.heightPct}%` }}
-                    className={`w-full max-w-[28px] rounded-t-lg transition-all ${
-                      item.year === '2569' 
-                        ? 'bg-[#6D28D9] shadow-sm shadow-purple-900/20' 
-                        : 'bg-[#A78BFA] group-hover:bg-[#8B5CF6]'
-                    }`}
+                  <div
+                    style={{ height: `${Math.max(8, (count / maxYearlyStudents) * 100)}%` }}
+                    className={`w-full max-w-[32px] rounded-t-lg transition-all ${idx === yearlyStudentStats.length - 1 ? 'bg-[#6D28D9] shadow-sm shadow-purple-900/20' : 'bg-[#A78BFA] group-hover:bg-[#8B5CF6]'}`}
+                    title={`${year}: ${count.toLocaleString()} คน`}
                   />
-                  <span className="text-[10px] font-bold text-[#64748B] mt-1">{item.year}</span>
+                  <span className="text-[10px] font-bold text-[#64748B] mt-1">{year}</span>
                 </div>
-              ))}
+              )) : <div className="w-full flex items-center justify-center text-xs text-[#94A3B8]">ยังไม่มีข้อมูลกิจกรรมสำหรับสถิติรายปี</div>}
             </div>
           </div>
         </div>
