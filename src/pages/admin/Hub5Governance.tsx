@@ -124,7 +124,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
       status: item.status,
     } : {
       title: '',
-      category: 'news',
+      category: activeTab === 'learning' ? 'knowledge' : 'news',
       summary: '',
       content: '',
       imageUrl: '',
@@ -453,7 +453,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
                     {item.status === 'published' ? 'เผยแพร่แล้ว' : 'ฉบับร่าง'}
                   </span>
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => openNewsEditor(item)} className="text-xs text-[#5B2A86] hover:underline font-semibold">แก้ไข</button>
+                    {currentRole !== 'report_viewer' && <button type="button" onClick={() => openNewsEditor(item)} className="text-xs text-[#5B2A86] hover:underline font-semibold">แก้ไข</button>}
                   </div>
                 </div>
               </div>
@@ -464,7 +464,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-labelledby="news-editor-title">
               <form onSubmit={handleSaveNews} className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl space-y-4">
                 <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
-                  <h2 id="news-editor-title" className="text-lg font-bold text-[#32145C]">{editingNews ? 'แก้ไขข่าวสาร' : 'เขียนข่าวใหม่'}</h2>
+                  <h2 id="news-editor-title" className="text-lg font-bold text-[#32145C]">{editingNews ? 'แก้ไขรายการ' : activeTab === 'learning' ? 'เพิ่มสื่อการเรียนรู้' : activeTab === 'media_vault' ? 'เพิ่มรายการเข้าคลังสื่อ' : 'เขียนข่าวใหม่'}</h2>
                   <button type="button" onClick={() => setShowNewsEditor(false)} className="rounded-lg px-3 py-1 text-sm text-gray-500 hover:bg-gray-100" aria-label="ปิดหน้าต่าง">ปิด</button>
                 </div>
                 <label className="block space-y-1 text-xs font-semibold text-[#32145C]">
