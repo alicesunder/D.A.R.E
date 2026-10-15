@@ -270,7 +270,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       {/* 3. MIDDLE SECTION: กิจกรรมล่าสุด (Left) & สื่อการเรียนรู้ยอดนิยม (Right) */}
       <section className="grid grid-cols-1 2xl:grid-cols-12 gap-4">
         {/* Left Column: กิจกรรมล่าสุด (8 cols) */}
-        <div className="rounded-[26px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-5 2xl:col-span-8 border border-white shadow-[0_12px_36px_rgba(42,36,98,0.08)] space-y-4">
+        <div className="rounded-[26px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-5 2xl:col-span-8 space-y-4">
           <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
             <h2 className="text-base font-bold text-[#1E293B] flex items-center gap-2">
               <span className="text-amber-500">⭐️</span>
