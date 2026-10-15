@@ -134,7 +134,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       {/* 1. HERO BANNER — use the exact user-provided D.A.R.E. classroom artwork */}
       <section className="relative isolate min-h-[350px] overflow-hidden rounded-[28px] border border-white bg-[#eaf4ff] shadow-[0_18px_50px_rgba(37,14,66,0.14)] sm:min-h-[380px] xl:min-h-[400px]">
         <img
-          src="https://d2ol7oe51mr4n9.cloudfront.net/user_3HTUhITR3E84djUNoi07Bq69Ud2/f13966dc-cde8-4a11-b3e7-b5f070d8207a.png"
+          src="/dare-classroom-hero.svg"
           alt="ครูช้าง D.A.R.E. กำลังสอนนักเรียนในห้องเรียน"
           className="absolute inset-0 h-full w-full object-cover object-[68%_center] sm:object-[68%_center]"
         />
