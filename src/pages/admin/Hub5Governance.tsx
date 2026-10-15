@@ -18,13 +18,15 @@ import {
   Lock, 
   UserPlus, 
   Filter, 
-  AlertCircle
+  AlertCircle,
+  BookOpen,
+  FolderOpen
 } from 'lucide-react';
 import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
 import { BppLogo, DareLogo } from '../../components/ui/Logos';
 
 interface Hub5GovernanceProps {
-  initialTab?: 'reports' | 'news' | 'rbac' | 'audit';
+  initialTab?: 'reports' | 'news' | 'rbac' | 'audit' | 'learning' | 'media_vault';
 }
 
 export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 'reports' }) => {
@@ -46,7 +48,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
   } = useApp();
 
   // Active sub-tab
-  const [activeTab, setActiveTab] = useState<'reports' | 'news' | 'rbac' | 'audit'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'reports' | 'news' | 'rbac' | 'audit' | 'learning' | 'media_vault'>(initialTab);
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -156,10 +158,14 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
     setEditingNews(null);
   };
 
-  const filteredNews = news.filter((n) => 
-    n.title.toLowerCase().includes(newsSearch.toLowerCase()) ||
-    n.summary.toLowerCase().includes(newsSearch.toLowerCase())
-  );
+  const filteredNews = news.filter((n) => {
+    const query = newsSearch.toLowerCase();
+    const matchesQuery = n.title.toLowerCase().includes(query) || n.summary.toLowerCase().includes(query);
+    const matchesModule = activeTab === 'learning' ? n.category === 'knowledge'
+      : activeTab === 'media_vault' ? Boolean(n.imageUrl)
+      : true;
+    return matchesQuery && matchesModule;
+  });
 
   const filteredAudit = auditLogs.filter((log) => {
     if (auditActionFilter === 'all') return true;
@@ -192,6 +198,20 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
           >
             <FileText className="w-3.5 h-3.5" />
             <span>รายงานราชการ</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('learning')}
+            className={`px-3.5 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'learning' ? 'bg-[#32145C] text-white shadow-xs' : 'text-[#756B80] hover:text-[#211A2B]'}`}
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>สื่อการเรียนรู้</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('media_vault')}
+            className={`px-3.5 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'media_vault' ? 'bg-[#32145C] text-white shadow-xs' : 'text-[#756B80] hover:text-[#211A2B]'}`}
+          >
+            <FolderOpen className="w-3.5 h-3.5" />
+            <span>คลังสื่อ</span>
           </button>
           <button
             onClick={() => setActiveTab('news')}
@@ -389,7 +409,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
       )}
 
       {/* 2. NEWS CMS TAB */}
-      {activeTab === 'news' && (
+      {(activeTab === 'news' || activeTab === 'learning' || activeTab === 'media_vault') && (
         <div className="bg-white rounded-2xl border border-[#E7E0EF] shadow-xs p-6 space-y-6">
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between border-b border-[#E7E0EF] pb-4">
             <div className="relative w-full sm:w-80">
@@ -398,7 +418,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
                 type="text"
                 value={newsSearch}
                 onChange={(e) => setNewsSearch(e.target.value)}
-                placeholder="ค้นหาบทความหรือข่าวประชาสัมพันธ์..."
+                placeholder={activeTab === 'learning' ? 'ค้นหาสื่อการเรียนรู้...' : activeTab === 'media_vault' ? 'ค้นหาคลังสื่อ...' : 'ค้นหาบทความหรือข่าวประชาสัมพันธ์...'}
                 className="w-full pl-9 pr-3 py-2 text-xs border border-[#E7E0EF] rounded-xl focus:outline-none focus:border-[#7C3AED]"
               />
             </div>
@@ -406,7 +426,7 @@ export const Hub5Governance: React.FC<Hub5GovernanceProps> = ({ initialTab = 're
             {currentRole !== 'report_viewer' && (
               <button type="button" onClick={() => openNewsEditor()} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#32145C] hover:bg-[#250E42] text-[#FFE082] text-xs font-semibold shadow-xs">
                 <Plus className="w-4 h-4" />
-                <span>เขียนข่าวใหม่</span>
+                <span>{activeTab === 'learning' ? 'เพิ่มสื่อการเรียนรู้' : activeTab === 'media_vault' ? 'เพิ่มรายการเข้าคลังสื่อ' : 'เขียนข่าวใหม่'}</span>
               </button>
             )}
           </div>
