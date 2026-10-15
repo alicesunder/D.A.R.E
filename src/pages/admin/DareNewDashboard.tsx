@@ -137,61 +137,44 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
       )}
 
-      {/* 1. FEATURED HERO — bright classroom campaign visual */}
-      <section className="relative isolate min-h-[390px] overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(115deg,#eaf5ff_0%,#f7f8ff_48%,#efe5ff_100%)] shadow-[0_22px_60px_rgba(40,25,90,0.13)]">
-        <div className="absolute -right-10 -top-24 h-80 w-80 rounded-full bg-[#A78BFA]/25 blur-3xl" />
-        <div className="absolute right-[22%] bottom-[-100px] h-72 w-72 rounded-full bg-[#60A5FA]/25 blur-3xl" />
-        <div className="absolute inset-y-0 right-0 hidden w-[55%] lg:block">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85" alt="บรรยากาศการเรียนรู้ในห้องเรียน" className="h-full w-full object-cover opacity-90" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#edf5ff] via-[#edf5ff]/15 to-transparent" />
-        </div>
-        <div className="absolute left-8 top-7 text-3xl text-[#FBBF24]">✦</div>
-        <div className="absolute left-[44%] top-10 text-2xl text-[#60A5FA]">✈</div>
-        <div className="absolute bottom-8 left-[40%] text-3xl text-[#FBBF24]">★</div>
-        <div className="relative z-10 grid min-h-[390px] grid-cols-1 items-center gap-5 px-6 py-8 sm:px-10 lg:grid-cols-12 lg:px-12">
-          <div className="lg:col-span-7">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/90 bg-white/75 px-3.5 py-2 text-[11px] font-extrabold tracking-wide text-[#5B2A86] shadow-sm backdrop-blur">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,.13)]" />
+      {/* 1. HERO BANNER — use the exact user-provided D.A.R.E. classroom artwork */}
+      <section className="relative isolate min-h-[380px] overflow-hidden rounded-[26px] border border-white/80 bg-[#eaf3ff] shadow-[0_18px_46px_rgba(20,38,93,0.12)] lg:min-h-[390px]">
+        <img
+          src="https://d2ol7oe51mr4n9.cloudfront.net/user_3HTUhITR3E84djUNoi07Bq69Ud2/f13966dc-cde8-4a11-b3e7-b5f070d8207a.png"
+          alt="ครูช้าง D.A.R.E. กำลังสอนนักเรียนในห้องเรียน"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf4ff]/98 via-[#eaf4ff]/90 to-[#eaf4ff]/10 lg:from-[#eaf4ff]/95 lg:via-[#eaf4ff]/75 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#172554]/10 via-transparent to-white/10" />
+        <div className="absolute left-6 top-5 z-10 text-3xl text-[#FBBF24] drop-shadow-sm">✦</div>
+        <div className="absolute left-[47%] top-8 z-10 hidden text-2xl text-[#60A5FA] drop-shadow-sm sm:block">✈</div>
+        <div className="absolute bottom-7 left-[42%] z-10 text-3xl text-[#FBBF24] drop-shadow-sm">★</div>
+        <div className="relative z-10 grid min-h-[380px] grid-cols-1 items-center px-6 py-8 sm:px-9 lg:min-h-[390px] lg:grid-cols-12 lg:px-10">
+          <div className="max-w-[640px] rounded-2xl bg-white/20 py-2 pr-2 backdrop-blur-[1px] lg:col-span-7">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/90 bg-white/90 px-3.5 py-2 text-[10px] font-extrabold tracking-wide text-[#5B2A86] shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
               D.A.R.E. THAILAND · GOOD CHOICES, BRIGHTER FUTURE
             </div>
-            <h1 className="max-w-3xl text-4xl font-black leading-[1.13] tracking-tight text-[#172554] sm:text-5xl xl:text-6xl">
+            <h1 className="max-w-3xl text-4xl font-black leading-[1.12] tracking-tight text-[#14265D] [text-shadow:0_1px_0_rgba(255,255,255,0.8)] sm:text-5xl xl:text-[58px]">
               สร้างภูมิคุ้มกันให้เด็กไทย
             </h1>
             <div className="mt-2 inline-block">
-              <span className="text-4xl font-black leading-tight tracking-tight text-[#E11D48] sm:text-5xl xl:text-6xl">ห่างไกลยาเสพติด</span>
-              <div className="mt-2 h-2 rounded-full bg-gradient-to-r from-[#E11D48] via-[#F43F5E] to-[#2563EB]" />
+              <span className="text-4xl font-black leading-tight tracking-tight text-[#F31635] [text-shadow:0_1px_0_rgba(255,255,255,0.7)] sm:text-5xl xl:text-[58px]">ห่างไกลยาเสพติด</span>
+              <div className="mt-2 h-[7px] rounded-full bg-gradient-to-r from-[#F31635] via-[#F31635] to-[#2449D8]" />
             </div>
-            <p className="mt-5 max-w-xl text-sm font-semibold leading-7 text-[#475569] sm:text-base">
+            <p className="mt-5 max-w-xl text-sm font-bold leading-7 text-[#14265D] [text-shadow:0_1px_2px_rgba(255,255,255,0.9)] sm:text-base">
               “รู้คิด รู้เท่าทัน เลือกสิ่งที่ดี เพื่ออนาคตที่สดใสของเยาวชนไทย”
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <button onClick={() => onNavigateHub('hub-overview')} className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#E11D48] to-[#BE123C] px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-rose-900/20 transition hover:-translate-y-0.5 hover:shadow-xl">
+              <button onClick={() => onNavigateHub('hub-overview')} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#F31635] to-[#D40D36] px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-rose-900/20 transition hover:-translate-y-0.5 hover:shadow-xl">
                 ดูข้อมูลโครงการ <ArrowRight className="h-4 w-4" />
               </button>
-              <button onClick={() => onNavigateHub('hub-operations')} className="inline-flex items-center gap-2 rounded-2xl border border-[#D8CCF5] bg-white/90 px-5 py-3.5 text-sm font-extrabold text-[#32145C] shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
+              <button onClick={() => onNavigateHub('hub-operations')} className="inline-flex items-center gap-2 rounded-full border border-[#2449D8]/50 bg-white/95 px-5 py-3 text-sm font-extrabold text-[#14265D] shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
                 <BookOpen className="h-4 w-4" /> สื่อการเรียนรู้
               </button>
-              <button onClick={() => setShowSheetsConfirm(true)} disabled={isExporting} className="inline-flex items-center gap-2 rounded-2xl bg-[#32145C] px-4 py-3.5 text-sm font-bold text-[#FFE082] shadow-md transition hover:bg-[#24103f] disabled:opacity-60">
-                <FileSpreadsheet className="h-4 w-4" /> {isExporting ? 'กำลังซิงค์...' : 'ส่งออก Sheets'}
-              </button>
             </div>
           </div>
-          <div className="relative flex min-h-[260px] items-center justify-center lg:col-span-5 lg:min-h-[330px]">
-            <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-[#C4B5FD]/70 via-[#93C5FD]/50 to-[#FBCFE8]/60 blur-2xl sm:h-80 sm:w-80" />
-            <div className="absolute right-2 top-2 z-20 rounded-2xl border border-white bg-white/95 px-4 py-3 shadow-xl sm:right-8 sm:top-4">
-              <div className="text-xs font-black text-[#32145C]">คิดดี เลือกได้</div>
-              <div className="mt-0.5 text-xs font-extrabold text-[#E11D48]">ชีวิตสดใส ✨</div>
-            </div>
-            <div className="relative z-10 flex scale-100 flex-col items-center rounded-[36px] border border-white/35 bg-white/10 px-2 pb-3 pt-2 shadow-none backdrop-blur-[1px] sm:scale-110">
-              <DareElephantMascot size={310} />
-              <div className="-mt-1 inline-flex items-center gap-2 rounded-full bg-[#1E1B4B] px-4 py-2 text-xs font-extrabold text-white shadow-lg">
-                <span className="h-2 w-2 rounded-full bg-[#EF4444]" /> ครูช้าง ตชด. D.A.R.E.
-              </div>
-            </div>
-            <div className="absolute bottom-2 left-1 rounded-2xl border border-white/90 bg-white/90 px-3 py-2 text-[10px] font-bold text-[#5B2A86] shadow-lg">
-              <Shield className="mr-1 inline h-3.5 w-3.5 text-emerald-500" /> เรียนรู้ · รู้ทัน · ปลอดภัย
-            </div>
-          </div>
+          <div className="hidden lg:col-span-5 lg:block" aria-hidden="true" />
         </div>
       </section>
 
