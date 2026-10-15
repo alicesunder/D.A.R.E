@@ -18,7 +18,6 @@ import {
   Search,
   Bell,
   Globe,
-  RefreshCw,
   LogOut,
   ShieldCheck,
   Menu,
@@ -40,11 +39,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   onReturnToPublic,
   children,
 }) => {
-  const { 
-    currentUser, 
-    currentRole, 
-    switchRole, 
-    resetDemoData,
+  const {
+    currentUser,
+    currentRole,
+    switchRole,
     schools,
     personnel
   } = useApp();
