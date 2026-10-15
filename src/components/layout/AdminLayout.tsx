@@ -246,7 +246,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Main Content Area */}
         <div className="relative flex-1 flex flex-col min-w-0 overflow-y-auto">
           {/* Top Bar matching Mockup */}
-          <header className="absolute inset-x-0 top-0 z-30 flex h-[88px] shrink-0 items-center justify-between border-b border-white/50 bg-white/35 px-4 shadow-sm backdrop-blur-[3px] sm:px-6 xl:px-7">
+          <header className="absolute inset-x-0 top-0 z-30 flex h-[76px] shrink-0 items-center justify-between border-b border-white/60 bg-white/35 px-4 shadow-sm backdrop-blur-[3px] sm:px-6 xl:px-7">
             {/* Left: Mobile Toggle & Official Title */}
             <div className="flex items-center gap-3 min-w-0">
               <button
