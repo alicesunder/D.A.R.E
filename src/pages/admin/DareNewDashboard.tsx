@@ -144,8 +144,8 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
           alt="ครูช้าง D.A.R.E. กำลังสอนนักเรียนในห้องเรียน"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf4ff]/98 via-[#eaf4ff]/90 to-[#eaf4ff]/10 lg:from-[#eaf4ff]/95 lg:via-[#eaf4ff]/75 lg:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#172554]/10 via-transparent to-white/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf4ff]/95 via-[#eaf4ff]/65 to-transparent lg:from-[#eaf4ff]/92 lg:via-[#eaf4ff]/20 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#172554]/5 via-transparent to-transparent" />
         <div className="absolute left-6 top-5 z-10 text-3xl text-[#FBBF24] drop-shadow-sm">✦</div>
         <div className="absolute left-[47%] top-8 z-10 hidden text-2xl text-[#60A5FA] drop-shadow-sm sm:block">✈</div>
         <div className="absolute bottom-7 left-[42%] z-10 text-3xl text-[#FBBF24] drop-shadow-sm">★</div>
