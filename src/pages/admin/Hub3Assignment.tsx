@@ -36,8 +36,12 @@ export const Hub3Assignment: React.FC = () => {
   const [selectedPersonnelId, setSelectedPersonnelId] = useState<string>('');
   const [selectedSchoolIds, setSelectedSchoolIds] = useState<string[]>([]);
   const [academicYear, setAcademicYear] = useState<string>('2568');
-  const [startDate, setStartDate] = useState<string>('2025-05-15');
-  const [endDate, setEndDate] = useState<string>('2026-03-31');
+  const [startDate, setStartDate] = useState<string>(() => new Date().toISOString().slice(0, 10));
+  const [endDate, setEndDate] = useState<string>(() => {
+    const end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+    return end.toISOString().slice(0, 10);
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
