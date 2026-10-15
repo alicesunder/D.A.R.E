@@ -116,7 +116,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
   };
 
   return (
-    <div className="space-y-5 max-w-[1600px] mx-auto pb-12 font-sans text-[#1E1B4B]">
+    <div className="w-full max-w-none mx-auto space-y-5 pb-12 font-sans text-[#1E1B4B]">
       {/* Google Sheets Export Alert Banner if exported */}
       {exportNotice && (
         <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-purple-900 text-xs flex items-center justify-between shadow-xs">
@@ -142,8 +142,8 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         <div className="absolute -right-10 -top-24 h-80 w-80 rounded-full bg-[#A78BFA]/25 blur-3xl" />
         <div className="absolute right-[22%] bottom-[-100px] h-72 w-72 rounded-full bg-[#60A5FA]/25 blur-3xl" />
         <div className="absolute inset-y-0 right-0 hidden w-[55%] lg:block">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85" alt="บรรยากาศการเรียนรู้ในห้องเรียน" className="h-full w-full object-cover opacity-30 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#edf5ff] via-[#edf5ff]/65 to-transparent" />
+          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85" alt="บรรยากาศการเรียนรู้ในห้องเรียน" className="h-full w-full object-cover opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#edf5ff] via-[#edf5ff]/15 to-transparent" />
         </div>
         <div className="absolute left-8 top-7 text-3xl text-[#FBBF24]">✦</div>
         <div className="absolute left-[44%] top-10 text-2xl text-[#60A5FA]">✈</div>
@@ -155,7 +155,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               D.A.R.E. THAILAND · GOOD CHOICES, BRIGHTER FUTURE
             </div>
             <h1 className="max-w-3xl text-4xl font-black leading-[1.13] tracking-tight text-[#172554] sm:text-5xl xl:text-6xl">
-              สร้างภูมิคุ้มกัน<br />ให้เด็กไทย
+              สร้างภูมิคุ้มกันให้เด็กไทย
             </h1>
             <div className="mt-2 inline-block">
               <span className="text-4xl font-black leading-tight tracking-tight text-[#E11D48] sm:text-5xl xl:text-6xl">ห่างไกลยาเสพติด</span>
@@ -182,8 +182,8 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               <div className="text-xs font-black text-[#32145C]">คิดดี เลือกได้</div>
               <div className="mt-0.5 text-xs font-extrabold text-[#E11D48]">ชีวิตสดใส ✨</div>
             </div>
-            <div className="relative z-10 flex flex-col items-center rounded-[36px] border border-white/90 bg-white/65 px-6 pb-5 pt-4 shadow-[0_25px_65px_rgba(91,42,134,0.20)] backdrop-blur-md">
-              <DareElephantMascot size={270} />
+            <div className="relative z-10 flex scale-100 flex-col items-center rounded-[36px] border border-white/35 bg-white/10 px-2 pb-3 pt-2 shadow-none backdrop-blur-[1px] sm:scale-110">
+              <DareElephantMascot size={310} />
               <div className="-mt-1 inline-flex items-center gap-2 rounded-full bg-[#1E1B4B] px-4 py-2 text-xs font-extrabold text-white shadow-lg">
                 <span className="h-2 w-2 rounded-full bg-[#EF4444]" /> ครูช้าง ตชด. D.A.R.E.
               </div>
