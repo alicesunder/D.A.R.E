@@ -143,31 +143,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync to local storage
   useEffect(() => {
-    localStorage.setItem('dare_bpp_organizations', JSON.stringify(organizations));
+    persistLocalState('dare_bpp_organizations', organizations);
   }, [organizations]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_personnel', JSON.stringify(personnel));
+    persistLocalState('dare_bpp_personnel', personnel);
   }, [personnel]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_schools', JSON.stringify(schools));
+    persistLocalState('dare_bpp_schools', schools);
   }, [schools]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_assignments', JSON.stringify(assignments));
+    persistLocalState('dare_bpp_assignments', assignments);
   }, [assignments]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_activities', JSON.stringify(activities));
+    persistLocalState('dare_bpp_activities', activities);
   }, [activities]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_news', JSON.stringify(news));
+    persistLocalState('dare_bpp_news', news);
   }, [news]);
 
   useEffect(() => {
-    localStorage.setItem('dare_bpp_audit_logs', JSON.stringify(auditLogs));
+    persistLocalState('dare_bpp_audit_logs', auditLogs);
   }, [auditLogs]);
 
   // Firebase auth initialization listener
