@@ -133,3 +133,86 @@ textarea:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+
+/* D.A.R.E. design refinement — shared visual language across all modules */
+:root {
+  --dare-purple-950: #21103f;
+  --dare-purple-900: #2b1450;
+  --dare-purple-700: #5b2a86;
+  --dare-purple-600: #6d28d9;
+  --dare-purple-100: #eee7fb;
+  --dare-gold: #d6b15e;
+  --dare-canvas: #f5f3fa;
+  --dare-line: #e8e2f0;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 78% 0%, rgba(224, 213, 249, .28), transparent 34%),
+    var(--dare-canvas);
+}
+
+::selection {
+  color: #fff;
+  background: #6d28d9;
+}
+
+/* Consistent, calm form controls without overriding checkbox/radio sizing */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,
+textarea {
+  border-color: var(--dare-line);
+  border-radius: 12px;
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+select:focus,
+textarea:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, .12);
+}
+
+/* Data tables: clearer hierarchy and less visual noise */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+thead th {
+  color: #4c376b;
+  background: #f7f4fc;
+  font-weight: 700;
+}
+
+tbody tr {
+  transition: background-color .15s ease;
+}
+
+tbody tr:hover {
+  background-color: #faf7ff;
+}
+
+tbody td, thead th {
+  border-color: #ece7f3;
+}
+
+/* Shared surface polish for common admin layouts */
+[class*="rounded-2xl"].border,
+[class*="rounded-[22px]"].border,
+[class*="rounded-xl"].border {
+  border-color: var(--dare-line);
+}
+
+@media (min-width: 768px) {
+  .dare-dashboard {
+    max-width: 1680px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dare-dashboard {
+    padding-inline: 0;
+  }
+}
