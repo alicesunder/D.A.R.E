@@ -11,6 +11,7 @@ import {
   MapPin,
   Play,
   CheckCircle2,
+  FileSpreadsheet,
   ArrowRight,
   Eye,
   X
@@ -160,6 +161,16 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
               </button>
               <button onClick={() => onNavigateHub('hub-operations')} className="inline-flex items-center gap-2 rounded-full border border-[#2449D8]/50 bg-white/95 px-5 py-3 text-sm font-extrabold text-[#14265D] shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
                 <BookOpen className="h-4 w-4" /> สื่อการเรียนรู้
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowSheetsConfirm(true)}
+                disabled={isExporting}
+                title="ส่งออก Google Sheets"
+                aria-label="ส่งออก Google Sheets"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/90 bg-white/85 text-[#5B2A86] shadow-sm transition hover:bg-white disabled:cursor-wait disabled:opacity-60"
+              >
+                <FileSpreadsheet className="h-4 w-4" />
               </button>
             </div>
           </div>
