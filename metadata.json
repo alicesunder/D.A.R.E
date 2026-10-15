@@ -1,0 +1,6 @@
+{
+  "name": "D.A.R.E. Command Center - Border Patrol Police",
+  "description": "ระบบบริหารจัดการครู D.A.R.E. กองบัญชาการตำรวจตระเวนชายแดน (บช.ตชด.)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
