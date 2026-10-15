@@ -130,7 +130,7 @@ function AppContent() {
             <Hub4Operations />
           )}
           {(adminTab === 'hub-governance' || adminTab === 'reports' || adminTab === 'statistics' || adminTab === 'news' || adminTab === 'learning' || adminTab === 'media_vault' || adminTab === 'users' || adminTab === 'audit' || adminTab === 'settings') && (
-            <Hub5Governance initialTab={adminTab === 'news' ? 'news' : adminTab === 'users' || adminTab === 'settings' ? 'rbac' : adminTab === 'audit' ? 'audit' : 'reports'} />
+            <Hub5Governance initialTab={adminTab === 'news' ? 'news' : adminTab === 'learning' ? 'learning' : adminTab === 'media_vault' ? 'media_vault' : adminTab === 'users' || adminTab === 'settings' ? 'rbac' : adminTab === 'audit' ? 'audit' : 'reports'} />
           )}
         </AdminLayout>
       )}
