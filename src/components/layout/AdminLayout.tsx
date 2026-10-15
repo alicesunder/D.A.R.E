@@ -244,9 +244,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <div className="relative flex-1 flex flex-col min-w-0 overflow-y-auto">
           {/* Top Bar matching Mockup */}
-          <header className="h-[76px] shrink-0 bg-white/95 backdrop-blur-md border-b border-[#E7E0EF] shadow-sm px-4 sm:px-6 xl:px-7 flex items-center justify-between sticky top-0 z-30">
+          <header className="absolute inset-x-0 top-0 z-30 flex h-[88px] shrink-0 items-center justify-between border-b border-white/50 bg-white/35 px-4 shadow-sm backdrop-blur-[3px] sm:px-6 xl:px-7">
             {/* Left: Mobile Toggle & Official Title */}
             <div className="flex items-center gap-3 min-w-0">
               <button
@@ -266,7 +266,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             </div>
 
             {/* Center: Large Interactive Search Bar */}
-            <div className="hidden md:block relative max-w-md w-full mx-6">
+            <div className="hidden md:block relative max-w-[400px] w-full mx-6">
               <div className="relative">
                 <Search className="w-4 h-4 text-gray-400 absolute left-4 top-3" />
                 <input
@@ -274,7 +274,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   value={globalSearch}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="ค้นหาโรงเรียน ครู D.A.R.E. สื่อการสอน ..."
-                  className="w-full pl-11 pr-4 py-2.5 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-full focus:outline-none focus:bg-white focus:border-[#7C3AED] transition-all shadow-inner"
+                  className="w-full rounded-full border border-white/90 bg-white/75 py-3 pl-11 pr-4 text-xs shadow-sm transition-all placeholder:text-slate-500 focus:border-[#7C3AED] focus:bg-white focus:outline-none"
                 />
               </div>
 
@@ -412,7 +412,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </header>
 
           {/* Main Viewport Content */}
-          <main className="flex-1 min-w-0 p-3 sm:p-4 xl:p-6">
+          <main className="flex-1 min-w-0 p-0">
             {children}
           </main>
         </div>
