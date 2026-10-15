@@ -38,6 +38,11 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
     return totals;
   }, {})).filter(([year]) => year !== 'ไม่ระบุ').sort(([a], [b]) => a.localeCompare(b, 'th')).slice(-5);
   const maxYearlyStudents = Math.max(1, ...yearlyStudentStats.map(([, count]) => count));
+  const provinceSchoolStats = Object.entries(schools.reduce<Record<string, number>>((totals, school) => {
+    const province = school.province?.trim() || 'ไม่ระบุจังหวัด';
+    totals[province] = (totals[province] || 0) + 1;
+    return totals;
+  }, {})).filter(([province]) => province !== 'ไม่ระบุจังหวัด').sort((a, b) => b[1] - a[1]).slice(0, 6);
 
   // Carousel slide state for featured activities
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -540,19 +545,16 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
 
               {/* Regional breakdown table (7 cols) */}
               <div className="col-span-8 space-y-2">
-                {[
-                  { region: 'ภาคเหนือ', count: '620' },
-                  { region: 'ภาคตะวันออกเฉียงเหนือ', count: '980' },
-                  { region: 'ภาคกลาง', count: '730' },
-                  { region: 'ภาคใต้', count: '420' },
-                  { region: 'ภาคตะวันออก', count: '310' },
-                  { region: 'ภาคตะวันตก', count: '190' },
-                ].map((r, idx) => (
-                  <div key={idx} className="flex items-center justify-between gap-2 border-b border-slate-50 pb-1.5 text-[10px] sm:text-xs">
-                    <span className="font-medium truncate">{r.region}</span>
-                    <span className="font-bold text-[#1E293B] tabular-nums whitespace-nowrap">{r.count} โรงเรียน</span>
+                {provinceSchoolStats.length > 0 ? provinceSchoolStats.map(([province, count]) => (
+                  <div key={province} className="flex items-center justify-between gap-2 border-b border-slate-50 pb-1.5 text-[10px] sm:text-xs">
+                    <span className="font-medium truncate">{province}</span>
+                    <span className="font-bold text-[#1E293B] tabular-nums whitespace-nowrap">{count.toLocaleString()} โรงเรียน</span>
                   </div>
-                ))}
+                )) : (
+                  <div className="flex h-full min-h-24 items-center justify-center text-center text-xs leading-5 text-slate-500">
+                    ยังไม่มีข้อมูลจังหวัดของโรงเรียนในระบบ
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -618,35 +620,23 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
             </div>
 
             <div className="space-y-2.5 pt-1 sm:space-y-3.5">
-              {[
-                {
-                  day: '17',
-                  month: 'ต.ค.',
-                  title: 'อบรมครู D.A.R.E. รุ่นที่ 4/2569',
-                  location: 'กรุงเทพมหานคร'
-                },
-                {
-                  day: '21',
-                  month: 'ต.ค.',
-                  title: 'กิจกรรม D.A.R.E. ในโรงเรียน',
-                  location: 'จ.นครราชสีมา'
-                },
-                {
-                  day: '29',
-                  month: 'ต.ค.',
-                  title: 'ประชุมผู้ประสานงานโครงการ',
-                  location: 'รูปแบบออนไลน์'
-                }
-              ].map((ev, idx) => (
+              {activities.slice().sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3).map((ev) => {
+                const eventDate = new Date(`${ev.date}T00:00:00`);
+                const day = Number.isNaN(eventDate.getTime()) ? '—' : String(eventDate.getDate());
+                const month = Number.isNaN(eventDate.getTime()) ? '' : eventDate.toLocaleDateString('th-TH', { month: 'short' });
+                return (
                 <div 
-                  key={idx}
+                  key={ev.id}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onNavigateHub('hub-operations'); } }}
                   onClick={() => onNavigateHub('hub-operations')}
                   className="flex items-start gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   {/* Date badge */}
                   <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border border-purple-100 bg-purple-50">
-                    <span className="text-base font-black leading-none text-purple-700">{ev.day}</span>
-                    <span className="mt-1 text-[9px] font-medium text-slate-500">{ev.month}</span>
+                    <span className="text-base font-black leading-none text-purple-700">{day}</span>
+                    <span className="mt-1 text-[9px] font-medium text-slate-500">{month}</span>
                   </div>
                   <div>
                     <div className="block text-xs font-bold leading-snug text-[#172554] sm:text-sm">
@@ -657,7 +647,9 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
+              {activities.length === 0 && <p className="py-5 text-center text-xs text-slate-500">ยังไม่มีรายการกิจกรรมในระบบ</p>}
             </div>
           </div>
         </div>
@@ -708,7 +700,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       <ConfirmationModal
         isOpen={showSheetsConfirm}
         title="ส่งออกรายงานสถิติ D.A.R.E. สู่ Google Sheets"
-        description="ระบบจะสร้างเอกสาร Google Spreadsheet ใหม่ใน Google Drive ของท่าน พร้อมส่งออกสถิติ 3,250 โรงเรียน, 5,840 ครู ตชด. และ 412,600 นักเรียนอย่างครบถ้วน"
+        description="ระบบจะสร้างเอกสาร Google Spreadsheet ใหม่ใน Google Drive ของท่าน โดยส่งออกข้อมูลที่มีอยู่ในระบบปัจจุบัน"
         type="sheets"
         confirmLabel="ส่งออกข้อมูลทันที"
         cancelLabel="ยกเลิก"
