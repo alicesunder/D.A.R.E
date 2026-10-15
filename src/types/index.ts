@@ -120,6 +120,7 @@ export interface Activity {
   instructorNames: string[];
   studentCount: number;
   lessonNumber?: number; // เช่น บทที่ 1-10
+  targetGrade?: string; // เช่น ป.5
   description: string;
   summary: string;
   photoUrls: string[];

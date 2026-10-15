@@ -13,20 +13,13 @@ import { PublicActivitiesPage } from './pages/public/PublicActivitiesPage';
 import { SchoolDirectoryPage } from './pages/public/SchoolDirectoryPage';
 import { ContactPage } from './pages/public/ContactPage';
 
-// Admin Pages
-import { AdminDashboard } from './pages/admin/AdminDashboard';
-import { OrganizationPage } from './pages/admin/OrganizationPage';
-import { PersonnelPage } from './pages/admin/PersonnelPage';
-import { SchoolRegistryPage } from './pages/admin/SchoolRegistryPage';
-import { AssignmentPage } from './pages/admin/AssignmentPage';
-import { ActivityCalendarPage } from './pages/admin/ActivityCalendarPage';
-import { ActivityManagementPage } from './pages/admin/ActivityManagementPage';
-import { ReportingPage } from './pages/admin/ReportingPage';
-import { StatisticsPage } from './pages/admin/StatisticsPage';
-import { NewsMediaPage } from './pages/admin/NewsMediaPage';
-import { UserRolesPage } from './pages/admin/UserRolesPage';
-import { AuditLogPage } from './pages/admin/AuditLogPage';
-import { SystemSettingsPage } from './pages/admin/SystemSettingsPage';
+// Admin Views & Hubs
+import { DareNewDashboard } from './pages/admin/DareNewDashboard';
+import { Hub1Overview } from './pages/admin/Hub1Overview';
+import { Hub2Registry } from './pages/admin/Hub2Registry';
+import { Hub3Assignment } from './pages/admin/Hub3Assignment';
+import { Hub4Operations } from './pages/admin/Hub4Operations';
+import { Hub5Governance } from './pages/admin/Hub5Governance';
 
 function AppContent() {
   // Navigation State
@@ -124,19 +117,21 @@ function AppContent() {
           onNavigate={navigateAdmin}
           onReturnToPublic={returnToPublic}
         >
-          {adminTab === 'overview' && <AdminDashboard onNavigate={navigateAdmin} />}
-          {adminTab === 'organization' && <OrganizationPage />}
-          {adminTab === 'personnel' && <PersonnelPage />}
-          {adminTab === 'schools' && <SchoolRegistryPage onNavigateToAssignment={() => navigateAdmin('assignments')} />}
-          {adminTab === 'assignments' && <AssignmentPage />}
-          {adminTab === 'calendar' && <ActivityCalendarPage />}
-          {adminTab === 'activities' && <ActivityManagementPage />}
-          {adminTab === 'reports' && <ReportingPage />}
-          {adminTab === 'statistics' && <StatisticsPage />}
-          {adminTab === 'news' && <NewsMediaPage />}
-          {adminTab === 'users' && <UserRolesPage />}
-          {adminTab === 'audit' && <AuditLogPage />}
-          {adminTab === 'settings' && <SystemSettingsPage />}
+          {(adminTab === 'overview' || adminTab === 'hub-overview') && (
+            <DareNewDashboard onNavigateHub={navigateAdmin} />
+          )}
+          {(adminTab === 'hub-registry' || adminTab === 'personnel' || adminTab === 'schools' || adminTab === 'organization') && (
+            <Hub2Registry />
+          )}
+          {(adminTab === 'hub-assignment' || adminTab === 'assignments') && (
+            <Hub3Assignment />
+          )}
+          {(adminTab === 'hub-operations' || adminTab === 'calendar' || adminTab === 'activities') && (
+            <Hub4Operations />
+          )}
+          {(adminTab === 'hub-governance' || adminTab === 'reports' || adminTab === 'statistics' || adminTab === 'news' || adminTab === 'learning' || adminTab === 'media_vault' || adminTab === 'users' || adminTab === 'audit' || adminTab === 'settings') && (
+            <Hub5Governance />
+          )}
         </AdminLayout>
       )}
     </>
