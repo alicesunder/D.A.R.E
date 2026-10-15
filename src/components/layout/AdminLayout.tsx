@@ -83,31 +83,31 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       id: 'learning', 
       label: 'สื่อการเรียนรู้', 
       icon: BookOpen,
-      targetTab: 'hub-governance'
+      targetTab: 'learning'
     },
     { 
       id: 'activities', 
       label: 'กิจกรรม/โครงการ', 
       icon: Calendar,
-      targetTab: 'hub-operations'
+      targetTab: 'activities'
     },
     { 
       id: 'statistics', 
       label: 'รายงานสถิติ', 
       icon: BarChart2,
-      targetTab: 'hub-governance'
+      targetTab: 'statistics'
     },
     { 
       id: 'media_vault', 
       label: 'คลังสื่อ', 
       icon: FolderOpen,
-      targetTab: 'hub-governance'
+      targetTab: 'media_vault'
     },
     { 
       id: 'news', 
       label: 'ข่าวสาร', 
       icon: Newspaper,
-      targetTab: 'hub-governance'
+      targetTab: 'news'
     },
     { 
       id: 'contact', 
