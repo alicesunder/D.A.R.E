@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { 
-  Building2, 
-  User, 
-  Users, 
-  BookOpen, 
-  ChevronRight, 
-  ChevronLeft, 
-  Clock, 
-  MapPin, 
-  Play, 
-  Calendar, 
-  FileSpreadsheet, 
-  CheckCircle2, 
-  Sparkles,
+import {
+  Building2,
+  User,
+  Users,
+  BookOpen,
+  ChevronRight,
+  ChevronLeft,
+  Clock,
+  MapPin,
+  Play,
+  CheckCircle2,
   ArrowRight,
-  Shield,
   Eye,
   X
 } from 'lucide-react';
 import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
-import { DareElephantMascot } from '../../components/ui/MascotArt';
 
 interface DareNewDashboardProps {
   onNavigateHub: (hubId: string) => void;
@@ -114,7 +109,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
   };
 
   return (
-    <div className="dare-dashboard w-full min-w-0 space-y-4 pb-10 font-sans text-[#172554]">
+    <div className="dare-dashboard w-full min-w-0 space-y-3.5 pb-8 font-sans text-[#172554]">
       {/* Google Sheets Export Alert Banner if exported */}
       {exportNotice && (
         <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-purple-900 text-xs flex items-center justify-between shadow-xs">
@@ -136,34 +131,30 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       )}
 
       {/* 1. HERO BANNER — use the exact user-provided D.A.R.E. classroom artwork */}
-      <section className="relative isolate min-h-[340px] overflow-hidden rounded-[26px] border border-white bg-[#eaf4ff] shadow-[0_14px_34px_rgba(31,52,117,0.12)] sm:min-h-[380px] xl:min-h-[400px]">
+      <section className="relative isolate min-h-[300px] overflow-hidden rounded-b-[24px] bg-[#eaf4ff] shadow-[0_12px_32px_rgba(31,52,117,0.10)] sm:min-h-[326px] xl:min-h-[330px]">
         <img
           src="https://d2ol7oe51mr4n9.cloudfront.net/user_3HTUhITR3E84djUNoi07Bq69Ud2/f13966dc-cde8-4a11-b3e7-b5f070d8207a.png"
           alt="ครูช้าง D.A.R.E. กำลังสอนนักเรียนในห้องเรียน"
-          className="absolute inset-0 h-full w-full object-cover object-[60%_center]"
+          className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#edf6ff]/95 via-[#edf6ff]/78 to-[#edf6ff]/8" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#edf6ff]/96 via-[#edf6ff]/86 to-[#edf6ff]/5" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#11255e]/15 via-transparent to-transparent" />
         <div className="absolute left-6 top-5 z-10 text-3xl text-[#FBBF24] drop-shadow-sm">✦</div>
         <div className="absolute left-[47%] top-8 z-10 hidden text-2xl text-[#60A5FA] drop-shadow-sm sm:block">✈</div>
         <div className="absolute bottom-7 left-[42%] z-10 text-3xl text-[#FBBF24] drop-shadow-sm">★</div>
-        <div className="relative z-10 flex min-h-[340px] items-center px-5 py-7 sm:min-h-[380px] sm:px-8 xl:min-h-[400px] xl:px-10">
-          <div className="max-w-[57%] sm:max-w-[55%] lg:max-w-[54%]">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/90 bg-white/90 px-3.5 py-2 text-[10px] font-extrabold tracking-wide text-[#5B2A86] shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              D.A.R.E. THAILAND · GOOD CHOICES, BRIGHTER FUTURE
-            </div>
-            <h1 className="max-w-3xl text-3xl font-black leading-[1.15] tracking-tight text-[#14265D] [text-shadow:0_1px_0_rgba(255,255,255,0.9)] sm:text-4xl xl:text-[54px]">
+        <div className="relative z-10 flex min-h-[300px] items-center px-5 py-5 sm:min-h-[326px] sm:px-8 xl:min-h-[330px] xl:px-9">
+          <div className="max-w-[61%] sm:max-w-[56%] lg:max-w-[56%]">
+            <h1 className="max-w-3xl text-3xl font-black leading-[1.15] tracking-tight text-[#14265D] [text-shadow:0_1px_0_rgba(255,255,255,0.9)] sm:text-4xl xl:text-[46px]">
               สร้างภูมิคุ้มกันให้เด็กไทย
             </h1>
             <div className="mt-2 inline-block">
               <span className="text-3xl font-black leading-tight tracking-tight text-[#F31635] [text-shadow:0_1px_0_rgba(255,255,255,0.8)] sm:text-4xl xl:text-[54px]">ห่างไกลยาเสพติด</span>
               <div className="mt-2 h-[7px] rounded-full bg-gradient-to-r from-[#F31635] via-[#F31635] to-[#2449D8]" />
             </div>
-            <p className="mt-5 max-w-xl text-sm font-bold leading-7 text-[#14265D] [text-shadow:0_1px_2px_rgba(255,255,255,0.9)] sm:text-base">
+            <p className="mt-4 max-w-xl text-sm font-bold leading-6 text-[#14265D] [text-shadow:0_1px_2px_rgba(255,255,255,0.9)] sm:text-base">
               “รู้คิด รู้เท่าทัน เลือกสิ่งที่ดี เพื่ออนาคตที่สดใสของเยาวชนไทย”
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap gap-3">
               <button onClick={() => onNavigateHub('hub-overview')} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#F31635] to-[#D40D36] px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-rose-900/20 transition hover:-translate-y-0.5 hover:shadow-xl">
                 ดูข้อมูลโครงการ <ArrowRight className="h-4 w-4" />
               </button>
@@ -181,16 +172,16 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 1: โรงเรียนที่เข้าร่วมโครงการ */}
         <div 
           onClick={() => onNavigateHub('hub-registry')}
-          className="bg-white rounded-[22px] p-5 border border-white shadow-[0_8px_26px_rgba(42,36,98,0.07)] hover:shadow-lg hover:border-purple-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-white bg-white p-3 shadow-[0_8px_26px_rgba(42,36,98,0.07)] transition-all hover:border-purple-300 hover:shadow-lg group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-2xl bg-[#8B5CF6] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#8B5CF6] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <Building2 className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xs text-[#64748B] font-medium">โรงเรียนที่เข้าร่วมโครงการ</div>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-[#1E293B]">{schools.length.toLocaleString()}</span>
+                <span className="text-2xl font-black text-[#172F81] sm:text-[28px]">{schools.length.toLocaleString()}</span>
               </div>
               <div className="text-[11px] text-[#94A3B8] font-normal">แห่ง ทั่วประเทศ</div>
             </div>
@@ -203,10 +194,10 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 2: ครู D.A.R.E. */}
         <div 
           onClick={() => onNavigateHub('hub-registry')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-rose-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-rose-300 hover:shadow-md group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#EF4444] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#EF4444] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <User className="w-6 h-6" />
             </div>
             <div>
@@ -225,10 +216,10 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 3: นักเรียนที่ได้รับความรู้ */}
         <div 
           onClick={() => onNavigateHub('hub-operations')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-blue-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-blue-300 hover:shadow-md group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#3B82F6] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#3B82F6] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <Users className="w-6 h-6" />
             </div>
             <div>
@@ -247,10 +238,10 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         {/* Card 4: สื่อการเรียนรู้ */}
         <div 
           onClick={() => onNavigateHub('hub-operations')}
-          className="bg-white rounded-2xl p-5 border border-[#E7E0EF] shadow-2xs hover:shadow-md hover:border-amber-300 transition-all cursor-pointer flex items-center justify-between group"
+          className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[#E7E0EF] bg-white p-3 shadow-2xs transition-all hover:border-amber-300 hover:shadow-md group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-13 h-13 rounded-2xl bg-[#F59E0B] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#F59E0B] text-white shadow-xs sm:h-[72px] sm:w-[72px]">
               <BookOpen className="w-6 h-6" />
             </div>
             <div>
@@ -268,9 +259,9 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
       </section>
 
       {/* 3. MIDDLE SECTION: กิจกรรมล่าสุด (Left) & สื่อการเรียนรู้ยอดนิยม (Right) */}
-      <section className="grid grid-cols-1 2xl:grid-cols-12 gap-4">
+      <section className="grid grid-cols-1 gap-4 xl:grid-cols-12">
         {/* Left Column: กิจกรรมล่าสุด (8 cols) */}
-        <div className="rounded-[26px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-5 2xl:col-span-8 space-y-4">
+        <div className="rounded-[26px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-5 xl:col-span-8 space-y-4">
           <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
             <h2 className="text-base font-bold text-[#1E293B] flex items-center gap-2">
               <span className="text-amber-500">⭐️</span>
@@ -400,7 +391,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
 
         {/* Right Column: สื่อการเรียนรู้ยอดนิยม (4 cols) */}
-        <div className="rounded-[26px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-5 2xl:col-span-4 border border-white shadow-[0_12px_36px_rgba(42,36,98,0.08)] space-y-4">
+        <div className="space-y-4 rounded-[24px] border border-white bg-white p-4 shadow-[0_9px_30px_rgba(40,55,105,0.07)] sm:p-4 xl:col-span-4">
           <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
             <h2 className="text-base font-bold text-[#1E293B] flex items-center gap-2">
               <span className="text-[#8B5CF6]">📢</span>
@@ -557,7 +548,7 @@ export const DareNewDashboard: React.FC<DareNewDashboardProps> = ({ onNavigateHu
         </div>
 
         {/* Box 2: สถิตินักเรียนรายปี (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-[28px] p-5 sm:p-6 border border-white shadow-[0_12px_36px_rgba(42,36,98,0.08)] space-y-4 flex flex-col justify-between">
+        <div className="flex flex-col justify-between space-y-4 rounded-[24px] border border-white bg-white p-4 shadow-[0_12px_36px_rgba(42,36,98,0.08)] sm:p-4 xl:col-span-4">
           <div>
             <div className="flex items-center justify-between border-b border-[#E7E0EF] pb-3">
               <h3 className="text-sm font-bold text-[#1E293B] flex items-center gap-2">
