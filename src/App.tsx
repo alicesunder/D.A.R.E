@@ -121,7 +121,7 @@ function AppContent() {
             <DareNewDashboard onNavigateHub={navigateAdmin} />
           )}
           {(adminTab === 'hub-registry' || adminTab === 'personnel' || adminTab === 'schools' || adminTab === 'organization') && (
-            <Hub2Registry />
+            <Hub2Registry initialTab={adminTab === 'schools' ? 'schools' : adminTab === 'organization' ? 'units' : 'personnel'} />
           )}
           {(adminTab === 'hub-assignment' || adminTab === 'assignments') && (
             <Hub3Assignment />
@@ -130,7 +130,7 @@ function AppContent() {
             <Hub4Operations />
           )}
           {(adminTab === 'hub-governance' || adminTab === 'reports' || adminTab === 'statistics' || adminTab === 'news' || adminTab === 'learning' || adminTab === 'media_vault' || adminTab === 'users' || adminTab === 'audit' || adminTab === 'settings') && (
-            <Hub5Governance />
+            <Hub5Governance initialTab={adminTab === 'news' ? 'news' : adminTab === 'users' || adminTab === 'settings' ? 'rbac' : adminTab === 'audit' ? 'audit' : 'reports'} />
           )}
         </AdminLayout>
       )}
