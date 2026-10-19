@@ -1,0 +1,7 @@
+D.A.R.E. Teacher Photos
+
+Added 237 extracted teacher image files to public/teacher-photos/.
+Created src/data/teacherPhotoMap.json with 235 row-based mappings.
+The map uses Personnel.sourceRow from the workbook-derived records (Excel row = sourceRow + 4).
+PersonnelPage now displays the matched official photo on the teacher grid cards; if a row has no matched photo, the initials fallback remains.
+Photos with duplicate or missing Excel row images should be reviewed before production publishing.

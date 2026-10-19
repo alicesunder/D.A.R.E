@@ -1,0 +1,174 @@
+/* Phase 24 — ONE "School Fun" theme for the landing page, public pages AND the admin dashboard.
+   Visual layer only (no data/logic). Builds on playful.css; scoped to .dare-playful (+ .dare-admin for the back office). */
+
+.dare-playful{ --pf-orange:#FF9F1C; --pop:cubic-bezier(.34,1.56,.64,1); }
+
+/* ── 1. Faint school artwork behind everything (fades out toward the top) ───────────── */
+.dare-playful::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:url('/images/dare-school-background.webp') center bottom / cover no-repeat;
+  opacity:.10;
+  -webkit-mask-image:linear-gradient(to top,#000 0,rgba(0,0,0,.6) 42%,transparent 88%);
+          mask-image:linear-gradient(to top,#000 0,rgba(0,0,0,.6) 42%,transparent 88%);
+}
+.dare-admin{ height:100vh; height:100dvh; background:
+    radial-gradient(circle at 12% 8%,#FFE9F4 0,transparent 38%),
+    radial-gradient(circle at 90% 14%,#E3F6FF 0,transparent 36%),
+    radial-gradient(circle at 80% 90%,#FFF4CC 0,transparent 40%),#FBF8FF; }
+.dare-admin .pf-decor span{ opacity:.28; }
+
+/* ── 2. Typography: playful headings, easy-to-read data ────────────────────────────── */
+.dare-admin table,.dare-admin input,.dare-admin select,.dare-admin textarea,.dare-admin option{ font-family:"Prompt","Sarabun",ui-sans-serif,system-ui,sans-serif; }
+.dare-admin main h2{ display:inline-block; background:linear-gradient(transparent 62%,rgba(255,200,61,.5) 62%); border-radius:4px; padding:0 .15em; }
+.dare-admin main h2::after{ display:none; }
+.dare-admin main h1 svg{ filter:drop-shadow(0 2px 0 rgba(124,58,237,.25)); }
+
+/* ── 3. Buttons & small chips: chunky + bouncy (admin) ─────────────────────────────── */
+.dare-admin main button[class*="bg-[#"][class*="text-white"],
+.dare-admin main button[class*="bg-[#D6B15E]"],
+.dare-admin main a[class*="bg-[#"][class*="text-white"]{ border-radius:999px!important; box-shadow:0 4px 0 rgba(43,27,90,.28); }
+.dare-admin main button.bg-white,.dare-admin main a.bg-white,.dare-admin main label.bg-white,.dare-admin main span.bg-white,.dare-admin main input.bg-white,.dare-admin main select.bg-white{ box-shadow:0 3px 0 #EADBFF!important; }
+.dare-admin main button:not(:disabled):active{ box-shadow:0 1px 0 rgba(43,27,90,.28); }
+.dare-admin main button,.dare-admin main a{ cursor:pointer; }
+
+/* Only real "cards" bounce on hover inside the admin (never whole tables / forms / modals) */
+.dare-admin main .bg-white:hover{ transform:none!important; }
+.dare-admin main :is(article,.dare-stat-card,.fun-card,.fun-kpi,.bg-white.cursor-pointer,a.bg-white):hover{ transform:translateY(-6px) rotate(-.6deg)!important; }
+.dare-admin main :is(article,.dare-stat-card,.fun-card,.fun-kpi,.bg-white.cursor-pointer):nth-child(even):hover{ transform:translateY(-6px) rotate(.6deg)!important; }
+.dare-admin main :is(article,.dare-stat-card,.fun-card,.fun-kpi,.bg-white.cursor-pointer,a.bg-white){ transition:transform .3s var(--pop),box-shadow .25s,border-color .2s; }
+
+/* Tables: rainbow-tinted header, bouncy row hover */
+.dare-admin main table thead tr{ background:linear-gradient(90deg,#F3EBFF,#FFE9F4,#FFF4CC)!important; }
+.dare-admin main table thead th{ color:#4C1D95!important; font-weight:700; }
+.dare-admin main table tbody tr{ transition:background .2s,transform .25s var(--pop); }
+.dare-admin main table tbody tr:hover{ background:#FBF3FF!important; transform:scale(1.008); }
+
+/* Tabs (segmented controls) */
+.fun-tab-active{ background:linear-gradient(135deg,#A855F7,#7C3AED)!important; color:#fff!important; box-shadow:0 3px 0 #5B21B6!important; }
+.fun-tab-active svg{ color:#fff!important; }
+
+/* ── 4. Sidebar: same palette, scenery shows through, bouncy items ─────────────────── */
+.dare-sidebar-shell{
+  background-image:linear-gradient(180deg,rgba(76,29,149,.70) 0%,rgba(91,33,182,.55) 45%,rgba(40,12,100,.86) 100%),url('/images/dare-school-background.webp');
+}
+.dare-sidebar-item{ transition:transform .28s var(--pop),background .2s!important; }
+.dare-sidebar-item:hover{ transform:translateX(5px) scale(1.04); }
+.dare-sidebar-item:active{ transform:scale(.94); }
+.dare-sidebar-item:hover svg{ transform:none; animation:pf-wiggle .6s ease-in-out; }
+.dare-sidebar-item-active{ background:linear-gradient(105deg,#FF6FB5,#A855F7 60%,#7C3AED)!important; border-color:#FFE08A!important; box-shadow:0 4px 0 rgba(43,27,90,.35),0 0 14px rgba(255,200,61,.5)!important; }
+.dare-sidebar-item-active::after{ animation:fun-ping 2.4s ease-out infinite; }
+@keyframes fun-ping{ 0%{opacity:.7;transform:scale(1)} 70%,100%{opacity:0;transform:scale(1.07)} }
+
+/* ── 5. Teacher directory (ทำเนียบครู D.A.R.E.) ─────────────────────────────────────── */
+.fun-kpi{ --c1:#A855F7; --c2:#6D28D9; position:relative; overflow:hidden; display:flex; align-items:center; gap:.9rem; min-height:104px; padding:1rem 1.15rem;
+  border-radius:1.6rem; color:#fff; background:linear-gradient(135deg,var(--c1),var(--c2)); box-shadow:0 6px 0 color-mix(in srgb,var(--c2) 70%,#000 0%),0 16px 26px -14px color-mix(in srgb,var(--c2) 70%,transparent); }
+.fun-kpi::before{ content:""; position:absolute; right:-1.6rem; top:-2rem; width:7rem; height:7rem; border-radius:50%; background:rgba(255,255,255,.16); }
+.fun-kpi::after{ content:""; position:absolute; right:1.4rem; bottom:.6rem; width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(255,255,255,.14); animation:pf-bob 4s ease-in-out infinite; }
+.fun-kpi-ico{ position:relative; z-index:1; flex:none; width:3.4rem; height:3.4rem; border-radius:1.2rem; display:grid; place-items:center; background:rgba(255,255,255,.24); border:2px solid rgba(255,255,255,.4); transition:transform .4s var(--pop); }
+.fun-kpi:hover .fun-kpi-ico{ transform:rotate(-10deg) scale(1.12); }
+.fun-kpi-label{ position:relative; z-index:1; font-size:.8rem; font-weight:600; opacity:.95; }
+.fun-kpi-num{ position:relative; z-index:1; font-size:1.9rem; font-weight:800; line-height:1.15; letter-spacing:-.02em; }
+.fun-kpi-num small{ font-size:.8rem; font-weight:600; opacity:.9; }
+.fun-kpi-note{ position:relative; z-index:1; font-size:.65rem; opacity:.85; }
+
+.fun-filterbar{ display:grid; gap:.65rem; grid-template-columns:1fr; padding:.8rem; border-radius:1.8rem; background:#fff; border:2px solid #EFE3FF; box-shadow:0 5px 0 #EADBFF; }
+@media(min-width:1024px){ .fun-filterbar{ grid-template-columns:minmax(240px,1.4fr) 190px 190px auto; align-items:center; } }
+.fun-field{ height:2.9rem; width:100%; padding:0 1rem; border-radius:999px!important; border:2px solid #E4D6FF!important; background:#fff; font-size:.88rem; color:#2B1B5A; outline:none; }
+.fun-field.has-icon{ padding-left:2.6rem; }
+.fun-chips{ display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; }
+.fun-chip{ height:2.5rem; padding:0 1rem; border-radius:999px; border:2px solid #E4D6FF; background:#fff; font-size:.8rem; font-weight:700; color:#5B2A86; transition:transform .25s var(--pop),background .2s; }
+.fun-chip:hover{ transform:translateY(-2px) scale(1.06); background:#F7F0FF; }
+.fun-chip.on{ color:#fff; border-color:transparent; background:linear-gradient(135deg,#FF6FB5,#A855F7); box-shadow:0 3px 0 #7C3AED; }
+.fun-reset{ height:2.9rem; padding:0 1.3rem; border-radius:999px; font-weight:800; font-size:.85rem; color:#fff; background:linear-gradient(135deg,#FFB020,#FF6FB5); box-shadow:0 4px 0 #C2410C55; }
+
+.fun-tcard{ --c1:#A855F7; --c2:#6D28D9; --i:0; position:relative; display:flex; flex-direction:column; overflow:hidden; border-radius:2rem; background:#fff;
+  border:2px solid color-mix(in srgb,var(--c1) 28%,#fff);
+  box-shadow:0 6px 0 color-mix(in srgb,var(--c1) 30%,#fff),0 18px 30px -18px color-mix(in srgb,var(--c2) 60%,transparent);
+  animation:pf-pop .55s var(--pop) both; animation-delay:calc(var(--i)*45ms); }
+.fun-tcard-top{ position:relative; height:6.6rem; background:linear-gradient(135deg,var(--c1),var(--c2)); overflow:hidden; }
+.fun-tcard-top i{ position:absolute; border-radius:50%; background:rgba(255,255,255,.22); animation:pf-bob 5s ease-in-out infinite; }
+.fun-tcard-top i:nth-child(1){ width:5rem; height:5rem; left:-1.4rem; top:-1.8rem; }
+.fun-tcard-top i:nth-child(2){ width:2.2rem; height:2.2rem; left:34%; bottom:.8rem; animation-delay:-1.2s; }
+.fun-tcard-top i:nth-child(3){ width:6rem; height:6rem; right:-1.6rem; top:-2.2rem; animation-delay:-2.4s; }
+.fun-tcard-top::after{ content:"D.A.R.E."; position:absolute; left:1rem; bottom:.6rem; font-size:.62rem; font-weight:800; letter-spacing:.2em; color:rgba(255,255,255,.85); }
+.fun-star{ position:absolute; right:.8rem; top:.8rem; z-index:3; width:2.5rem; height:2.5rem; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,.88); color:#7C3AED; box-shadow:0 3px 0 rgba(43,27,90,.2); transition:transform .3s var(--pop); }
+.fun-star:hover{ transform:scale(1.18) rotate(14deg); }
+.fun-star[aria-pressed="true"]{ background:#FFD56A; color:#7A4A00; animation:pf-wiggle .6s ease-in-out; }
+.fun-avatar{ position:relative; z-index:2; flex:none; width:7.6rem; height:7.6rem; margin:-3.8rem auto 0; border-radius:50%; overflow:hidden; border:6px solid #fff;
+  background:linear-gradient(135deg,var(--c1),var(--c2)); box-shadow:0 8px 0 color-mix(in srgb,var(--c1) 35%,#fff),0 14px 22px -10px rgba(43,27,90,.4); transition:transform .4s var(--pop); }
+.fun-tcard:hover .fun-avatar{ transform:scale(1.08) rotate(-4deg); }
+.fun-avatar img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; }
+.fun-avatar b{ position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-size:2.1rem; font-weight:800; }
+.fun-tbody{ display:flex; flex-direction:column; gap:.8rem; padding:1rem 1.25rem 1.25rem; min-width:0; flex:1; }
+.fun-center{ text-align:center; }
+.fun-rank{ display:inline-block; padding:.2rem .8rem; border-radius:999px; font-size:.7rem; font-weight:800; color:var(--c2); background:color-mix(in srgb,var(--c1) 16%,#fff); }
+.fun-name{ margin-top:.35rem; font-size:1.12rem; font-weight:800; line-height:1.4; color:#2B1B5A; word-break:break-word; }
+.fun-sub{ font-size:.74rem; color:#7C6F96; }
+.fun-row{ display:flex; align-items:flex-start; gap:.6rem; font-size:.8rem; color:#4B3F66; }
+.fun-row span.ico{ flex:none; width:2rem; height:2rem; border-radius:.9rem; display:grid; place-items:center; color:#fff; background:linear-gradient(135deg,var(--c1),var(--c2)); transition:transform .3s var(--pop); }
+.fun-tcard:hover .fun-row span.ico{ transform:rotate(-8deg) scale(1.1); }
+.fun-row em{ font-style:normal; padding-top:.3rem; line-height:1.45; }
+.fun-tags{ display:flex; flex-wrap:wrap; gap:.4rem; }
+.fun-tag{ display:inline-flex; align-items:center; gap:.3rem; padding:.3rem .75rem; border-radius:999px; font-size:.7rem; font-weight:800; background:#F3EDFF; color:#5B2A86; }
+.fun-tag.ok{ background:#DDF9EC; color:#047857; } .fun-tag.warn{ background:#FFF0C7; color:#92580A; }
+.fun-actions{ display:flex; gap:.5rem; margin-top:auto; padding-top:.2rem; }
+.fun-view{ flex:1; height:2.8rem; border-radius:999px; display:flex; align-items:center; justify-content:center; gap:.45rem; font-size:.82rem; font-weight:800; color:#fff; background:linear-gradient(135deg,var(--c1),var(--c2)); box-shadow:0 4px 0 color-mix(in srgb,var(--c2) 70%,#000); }
+.fun-mini{ flex:none; width:2.8rem; height:2.8rem; border-radius:50%; display:grid; place-items:center; background:#F5F0FF; color:#6D28D9; }
+.fun-mini.danger{ background:#FFE9EE; color:#E11D48; }
+.fun-mini:hover{ transform:scale(1.15) rotate(8deg); }
+/* list mode = same card, laid out as a row */
+.fun-tcard.is-list{ flex-direction:row; align-items:center; gap:.9rem; padding:.7rem 1rem .7rem .8rem; border-radius:1.6rem; }
+.fun-tcard.is-list .fun-tcard-top{ display:none; }
+.fun-tcard.is-list .fun-avatar{ margin:0; width:4.8rem; height:4.8rem; border-width:4px; }
+.fun-tcard.is-list .fun-avatar b{ font-size:1.3rem; }
+.fun-tcard.is-list .fun-tbody{ display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1.4fr) auto auto; align-items:center; gap:.9rem; padding:0; }
+.fun-tcard.is-list .fun-center{ text-align:left; }
+.fun-tcard.is-list .fun-info{ display:grid; gap:.3rem; }
+.fun-tcard.is-list .fun-star{ position:static; order:9; }
+@media(max-width:900px){ .fun-tcard.is-list{ flex-wrap:wrap; } .fun-tcard.is-list .fun-tbody{ grid-template-columns:1fr; } }
+.fun-more{ padding:.8rem 1.8rem; border-radius:999px; font-weight:800; color:#fff; background:linear-gradient(135deg,#2DD4A8,#4CC9F0); box-shadow:0 5px 0 #0E7490aa; }
+.fun-empty{ display:grid; justify-items:center; gap:.5rem; padding:2.5rem 1rem; text-align:center; border-radius:2rem; background:#fff; border:2px dashed #D8C7FF; }
+.fun-empty img{ width:7rem; }
+
+/* ── 6. Dashboard: everything bounces in, bars grow, icons wiggle ───────────────────── */
+.dare-playful .dare-dashboard>*{ animation:pf-pop .65s var(--pop) both; }
+.dare-playful .dare-dashboard>*:nth-child(2){ animation-delay:.07s } .dare-playful .dare-dashboard>*:nth-child(3){ animation-delay:.14s }
+.dare-playful .dare-dashboard>*:nth-child(4){ animation-delay:.21s } .dare-playful .dare-dashboard>*:nth-child(5){ animation-delay:.28s }
+.dare-playful .dare-dashboard>*:nth-child(n+6){ animation-delay:.35s }
+.dare-playful .dare-dashboard>.dare-hero{ animation:pf-pop .7s var(--pop) both,dare-glow 8s ease-in-out 1s infinite; }
+.dare-playful .dare-stat-card{ animation:pf-pop .6s var(--pop) both; border-radius:1.6rem!important; }
+.dare-playful .dare-stat-card:hover [class*="h-16"],.dare-playful .dare-stat-card:hover [class*="h-12"]{ animation:pf-wiggle .6s ease-in-out; }
+.fun-bar-rise{ transform-origin:50% 100%; animation:fun-rise 1s var(--pop) both; }
+.fun-bar-grow{ transform-origin:0 50%; animation:fun-grow 1s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes fun-rise{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+@keyframes fun-grow{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+
+/* ── 7. Click feedback (see utils/funFx.ts) ─────────────────────────────────────────── */
+@keyframes fun-jelly{ 0%{transform:scale(1)} 30%{transform:scale(.9,1.08)} 55%{transform:scale(1.08,.94)} 78%{transform:scale(.98,1.02)} 100%{transform:scale(1)} }
+.fun-jelly{ animation:fun-jelly .5s ease-out!important; }
+.fun-spark{ position:fixed; z-index:99999; pointer-events:none; font-size:14px; transform:translate(-50%,-50%); animation:fun-spark .7s ease-out forwards; }
+@keyframes fun-spark{ 0%{opacity:1;transform:translate(-50%,-50%) scale(.4)} 100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2) rotate(40deg)} }
+
+@media (prefers-reduced-motion:reduce){
+  .dare-playful *,.dare-playful *::before,.dare-playful *::after,.fun-spark{ animation:none!important; transition:none!important; }
+}
+
+
+/* ── 8. Fixes from real screenshots ─────────────────────────────────────────────────── */
+.dare-playful h1{ text-wrap:balance; }
+/* dashboard hero sits on a pale photo wash: use solid ink so the headline is readable */
+.dare-playful .dare-hero h1{ background:none; -webkit-text-fill-color:#2B1B5A; color:#2B1B5A; }
+/* highlighter underline only on light backgrounds (not on dark/white-text banners) */
+.dare-admin main h2[class*="text-white"],.dare-admin main [class*="text-white"] h2{ background:none; padding:0; }
+/* icon buttons inside tables: no chunky shadow arcs */
+.dare-admin main table button{ box-shadow:none!important; border:0!important; border-radius:999px!important; }
+.dare-admin main table button:hover{ background:#F3E8FF!important; }
+/* public navbar: keep links on one line, theme-coloured bar */
+.dare-playful nav.hidden button,.dare-playful nav[class*="lg:flex"] button{ white-space:nowrap; }
+.dare-playful nav[class*="lg:flex"] button:focus-visible{ outline:3px solid #FFC83D; outline-offset:2px; }
+.dare-playful nav[class*="lg:flex"] button:hover:not(:focus-visible){ outline:none; }
+/* landing CTAs share the dashboard's pink→purple, chunky look */
+.dare-login-btn,.dare-primary-cta{ background:linear-gradient(110deg,#FF6FB5,#7C3AED)!important; box-shadow:0 5px 0 #5B21B6,0 12px 22px rgba(124,58,237,.25)!important; }
+.dare-primary-cta:hover,.dare-login-btn:hover{ filter:brightness(1.06); }
+/* teacher cards: breathing room under the name */
+.fun-sub{ margin-top:.15rem; }

@@ -140,36 +140,14 @@ export const DareElephantMascot: React.FC<{ className?: string; size?: number }>
  */
 export const SidebarMascotCard: React.FC = () => {
   return (
-    <div className="relative mt-auto pt-4 px-3 pb-3">
-      <div className="relative rounded-2xl bg-gradient-to-b from-[#2D165B] to-[#180A33] border border-purple-500/30 p-3 text-center overflow-hidden shadow-lg">
-        {/* Soft Background glow */}
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-28 h-28 bg-[#7C3AED]/30 rounded-full blur-xl pointer-events-none" />
-
-        {/* Mascot Avatar */}
-        <div className="relative z-10 flex justify-center -mt-2 mb-1">
-          <DareElephantMascot size={96} />
-        </div>
-
-        {/* Red D.A.R.E. Ribbon */}
-        <div className="relative z-10 -mt-2">
-          <span className="inline-block px-3 py-1 rounded-md bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white font-black text-xs tracking-wider shadow-md transform -rotate-1">
-            D.A.R.E.
-          </span>
-          <div className="text-[10px] text-purple-200 font-bold uppercase tracking-widest mt-0.5">
-            THAILAND
-          </div>
-        </div>
-
-        {/* Motto slogan */}
-        <div className="mt-2 pt-2 border-t border-purple-400/20 text-center">
-          <div className="text-[11px] font-black text-[#FFE082] uppercase tracking-wide leading-tight">
-            GOOD CHOICES
-          </div>
-          <div className="text-[10px] font-bold text-white uppercase tracking-wider">
-            BRIGHTER FUTURE
-          </div>
-        </div>
-      </div>
+    <div className="relative mt-auto w-full shrink-0 overflow-hidden px-1 pb-2 pt-1">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#26104C] via-[#26104C]/70 to-transparent" />
+      <img
+        src="/images/dare-elephant-mascot.webp"
+        alt="มาสคอตครูช้างตำรวจ D.A.R.E. Thailand"
+        className="relative z-10 mx-auto block h-auto w-full max-w-[190px] object-contain object-bottom drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]"
+        draggable={false}
+      />
     </div>
   );
 };

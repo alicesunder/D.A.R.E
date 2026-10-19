@@ -1,0 +1,18 @@
+D.A.R.E. Teacher Directory — Update Notes
+
+Updated file:
+- src/pages/admin/PersonnelPage.tsx
+
+Changes:
+- Added KPI cards computed from existing personnel and school-assignment records (not hardcoded demo metrics).
+- Added province filter and expanded search to include rank and organization name.
+- Added Grid/List view toggle; Grid is the default view.
+- Added responsive teacher profile cards with status badges, unit/province details, and profile-detail action.
+- Added favorite-star toggle saved locally in the current browser (localStorage); it is not synced between accounts.
+- Kept existing add/edit/delete controls, CSV/Google Sheets export, detail modal, table sorting, and pagination.
+- Uses initials rather than inventing officer photographs where the data model has no portrait field.
+
+Validation:
+- Build could not be completed in this environment because dependencies were not installed; npm install timed out.
+- Please run `npm install` then `npm run build` locally to validate.
+- KPI student totals are not shown because the current personnel record model does not contain a verified student-training total. The fourth card instead summarizes assigned-school counts to avoid inventing a student metric.

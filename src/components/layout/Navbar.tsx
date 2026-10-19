@@ -33,7 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#32145C] text-white shadow-md border-b border-[#5B2A86]/50">
+    <header className="sticky top-0 z-40 bg-white/95 text-[#172554] shadow-[0_8px_30px_rgba(23,37,84,0.08)] border-b border-[#E5EAF5] backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo Brand */}
@@ -54,8 +54,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleLinkClick(link.id)}
                   className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                     active
-                      ? 'bg-[#5B2A86] text-[#D6B15E] shadow-xs'
-                      : 'text-purple-100 hover:text-white hover:bg-[#5B2A86]/40'
+                      ? 'bg-[#FFE4E8] text-[#E31837] shadow-xs'
+                      : 'text-[#334155] hover:text-[#E31837] hover:bg-[#FFF0F2]'
                   }`}
                 >
                   {link.label}
@@ -69,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Search Trigger */}
             <button
               onClick={onOpenSearch}
-              className="p-2 text-purple-200 hover:text-white hover:bg-[#5B2A86]/50 rounded-lg transition-colors"
+              className="p-2 text-[#334155] hover:text-[#E31837] hover:bg-[#FFF0F2] rounded-lg transition-colors"
               title="ค้นหาข้อมูล"
             >
               <Search className="w-5 h-5" />
@@ -78,9 +78,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Admin Login CTA */}
             <button
               onClick={onGoToAdmin}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#211A2B] bg-[#D6B15E] hover:bg-[#c49f48] rounded-lg shadow-sm transition-transform active:scale-95"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#E31837] hover:bg-[#C8102E] rounded-lg shadow-sm transition-transform active:scale-95"
             >
-              <Lock className="w-4 h-4 text-[#32145C]" />
+              <Lock className="w-4 h-4 text-white" />
               <span>เข้าสู่ระบบเจ้าหน้าที่</span>
             </button>
           </div>
@@ -89,13 +89,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={onOpenSearch}
-              className="p-2 text-purple-200 hover:text-white rounded-lg"
+              className="p-2 text-[#334155] hover:text-[#E31837] rounded-lg"
             >
               <Search className="w-5 h-5" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-purple-200 hover:text-white hover:bg-[#5B2A86]/50 rounded-lg"
+              className="p-2 text-[#334155] hover:text-[#E31837] hover:bg-[#FFF0F2] rounded-lg"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -105,30 +105,30 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#250E42] border-t border-[#5B2A86] px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2 duration-150">
+        <div className="lg:hidden bg-white border-t border-[#E5EAF5] shadow-lg px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2 duration-150">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleLinkClick(link.id)}
               className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-between ${
                 currentTab === link.id
-                  ? 'bg-[#5B2A86] text-[#D6B15E]'
-                  : 'text-purple-100 hover:bg-[#5B2A86]/30'
+                  ? 'bg-[#FFE4E8] text-[#E31837]'
+                  : 'text-[#334155] hover:bg-[#FFF0F2]'
               }`}
             >
               <span>{link.label}</span>
               <ChevronRight className="w-4 h-4 opacity-70" />
             </button>
           ))}
-          <div className="pt-3 border-t border-purple-900/60">
+          <div className="pt-3 border-t border-[#E5EAF5]">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onGoToAdmin();
               }}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-[#211A2B] bg-[#D6B15E] hover:bg-[#c49f48] rounded-lg"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#E31837] hover:bg-[#C8102E] rounded-lg"
             >
-              <Shield className="w-4 h-4 text-[#32145C]" />
+              <Shield className="w-4 h-4 text-white" />
               <span>เข้าสู่ระบบศูนย์บัญชาการ (Admin)</span>
             </button>
           </div>

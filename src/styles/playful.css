@@ -1,0 +1,57 @@
+/* Phase 23 — "School Fun" theme for the public site. Pure visual layer: no data or logic touched.
+   Scoped to .dare-playful so the admin dashboard keeps its own look. */
+.dare-playful{
+  --pf-purple:#7C3AED; --pf-pink:#FF6FB5; --pf-sun:#FFC83D; --pf-mint:#2DD4A8; --pf-sky:#4CC9F0; --pf-ink:#2B1B5A;
+  font-family:"Mali","Prompt","Sarabun",ui-sans-serif,system-ui,sans-serif;
+  color:var(--pf-ink);
+  background:
+    radial-gradient(circle at 12% 8%,#FFE9F4 0,transparent 38%),
+    radial-gradient(circle at 90% 14%,#E3F6FF 0,transparent 36%),
+    radial-gradient(circle at 80% 90%,#FFF4CC 0,transparent 40%),
+    #FBF8FF;
+  position:relative; overflow-x:clip;
+}
+.dare-playful h1,.dare-playful h2,.dare-playful h3{font-family:"Mali","Prompt",sans-serif;letter-spacing:-.01em}
+.dare-playful h1:not([class*="text-white"]){background:linear-gradient(90deg,var(--pf-purple),var(--pf-pink),#FF9F1C);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dare-playful h2{position:relative;display:inline-block}
+.dare-playful h2::after{content:"";position:absolute;left:0;right:0;bottom:-.15em;height:.38em;border-radius:99px;background:var(--pf-sun);opacity:.45;z-index:-1}
+
+/* Cards: chunky, rounded, bouncy */
+.dare-playful main [class*="rounded-2xl"],.dare-playful main [class*="rounded-xl"]{border-radius:1.6rem!important}
+.dare-playful main .bg-white{border:2px solid #EFE3FF!important;box-shadow:0 6px 0 #EADBFF,0 14px 28px -14px rgba(124,58,237,.35)!important;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
+.dare-playful main .bg-white:not(:has(table,input,select,textarea,form,.overflow-x-auto)):hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 10px 0 #E0CCFF,0 22px 32px -14px rgba(124,58,237,.45)!important}
+.dare-playful main .bg-white:not(:has(table,input,select,textarea,form,.overflow-x-auto)):nth-child(3n+2):hover{transform:translateY(-6px) rotate(.6deg)}
+
+/* Buttons: pill + squish */
+.dare-playful button,.dare-playful a[class*="rounded"]{transition:transform .18s cubic-bezier(.34,1.56,.64,1),filter .2s}
+.dare-playful button:not(:disabled):hover,.dare-playful a[class*="rounded"]:hover{transform:translateY(-2px) scale(1.04)}
+.dare-playful button:not(:disabled):active{transform:scale(.94)}
+.dare-playful button[class*="bg-[#5"],.dare-playful button[class*="bg-[#7"],.dare-playful button[class*="bg-violet"],.dare-playful button[class*="bg-purple"]{border-radius:999px;box-shadow:0 4px 0 rgba(43,27,90,.28)}
+.dare-playful :focus-visible{outline:3px solid var(--pf-sun);outline-offset:3px;border-radius:12px}
+.dare-playful input,.dare-playful select,.dare-playful textarea{border-radius:1rem!important;border:2px solid #E4D6FF!important;background:#fff}
+.dare-playful input:focus,.dare-playful select:focus,.dare-playful textarea:focus{border-color:var(--pf-pink)!important;box-shadow:0 0 0 4px rgba(255,111,181,.2)!important}
+
+/* Page-in animation: children pop in one after another */
+.dare-playful main>*>*{animation:pf-pop .6s cubic-bezier(.34,1.56,.64,1) both}
+.dare-playful main>*>*:nth-child(2){animation-delay:.08s}.dare-playful main>*>*:nth-child(3){animation-delay:.16s}
+.dare-playful main>*>*:nth-child(4){animation-delay:.24s}.dare-playful main>*>*:nth-child(n+5){animation-delay:.32s}
+@keyframes pf-pop{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+
+/* Mascot + logo come alive */
+.dare-playful img[src*="elephant"]{animation:pf-bob 3.2s ease-in-out infinite;transform-origin:50% 90%}
+.dare-playful img[src*="elephant"]:hover{animation:pf-wiggle .6s ease-in-out}
+@keyframes pf-bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-12px) rotate(1.5deg)}}
+@keyframes pf-wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg) scale(1.05)}75%{transform:rotate(8deg) scale(1.05)}}
+
+/* Floating school doodles (PlayfulDecor) */
+.pf-decor{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.pf-decor span{position:absolute;font-size:clamp(1.4rem,3vw,2.6rem);opacity:.55;animation:pf-float var(--d,9s) ease-in-out infinite;animation-delay:var(--s,0s);filter:drop-shadow(0 4px 6px rgba(124,58,237,.18))}
+@keyframes pf-float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-26px) rotate(10deg)}}
+.dare-playful main,.dare-playful footer{position:relative;z-index:1}
+
+/* Rainbow strip under the navbar */
+.dare-playful nav:not(.dare-home-nav):not(.hidden),.dare-playful header{border-bottom:5px solid transparent!important;border-image:linear-gradient(90deg,var(--pf-pink),var(--pf-sun),var(--pf-mint),var(--pf-sky),var(--pf-purple)) 1!important}
+
+@media (prefers-reduced-motion:reduce){
+  .dare-playful *,.pf-decor span{animation:none!important;transition:none!important}
+}

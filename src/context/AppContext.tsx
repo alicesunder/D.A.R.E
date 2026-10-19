@@ -111,11 +111,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [personnel, setPersonnel] = useState<Personnel[]>(() => {
-    return readLocalState('dare_bpp_personnel', INITIAL_PERSONNEL);
+    const saved = readLocalState<Personnel[]>('dare_bpp_personnel', INITIAL_PERSONNEL);
+    const savedById = new Map(saved.map((person) => [person.id, person]));
+    const officialRoster = INITIAL_PERSONNEL.map((person) => savedById.get(person.id) ?? person);
+    // Keep user-added records, but discard the old placeholder demo roster.
+    const customRecords = saved.filter((person) =>
+      !person.id.startsWith('per-') && !INITIAL_PERSONNEL.some((seed) => seed.id === person.id)
+    );
+    return [...officialRoster, ...customRecords];
   });
 
   const [schools, setSchools] = useState<School[]>(() => {
-    return readLocalState('dare_bpp_schools', INITIAL_SCHOOLS);
+    const saved = readLocalState<School[]>('dare_bpp_schools', INITIAL_SCHOOLS);
+    const savedById = new Map(saved.map((school) => [school.id, school]));
+    const officialSchools = INITIAL_SCHOOLS.map((school) => savedById.get(school.id) ?? school);
+    const customSchools = saved.filter((school) =>
+      !school.id.startsWith('sch-') && !INITIAL_SCHOOLS.some((seed) => seed.id === school.id)
+    );
+    return [...officialSchools, ...customSchools];
   });
 
   const [assignments, setAssignments] = useState<Assignment[]>(() => {

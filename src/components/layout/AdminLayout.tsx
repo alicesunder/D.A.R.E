@@ -3,15 +3,14 @@ import { useApp } from '../../context/AppContext';
 import { UserRole } from '../../types';
 import { BrandIdentity, DareLogo } from '../ui/Logos';
 import { SidebarMascotCard } from '../ui/MascotArt';
+import { PlayfulDecor } from '../ui/PlayfulDecor';
 import { 
   Home,
-  HelpCircle,
   Building2,
   Users,
   BookOpen,
   Calendar,
   BarChart2,
-  FolderOpen,
   Newspaper,
   PhoneCall,
   ChevronDown,
@@ -23,7 +22,9 @@ import {
   Menu,
   X,
   FileSpreadsheet,
-  CheckCircle2
+  CheckCircle2,
+  ClipboardCheck,
+  Trophy
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -62,12 +63,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       targetTab: 'overview'
     },
     { 
-      id: 'about', 
-      label: 'เกี่ยวกับโครงการ', 
-      icon: HelpCircle,
-      targetTab: 'about'
-    },
-    { 
       id: 'schools', 
       label: 'จัดการโรงเรียน', 
       icon: Building2,
@@ -79,9 +74,33 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       icon: Users,
       targetTab: 'personnel'
     },
+    {
+      id: 'leaderboard',
+      label: 'อันดับครูแดร์ประจำเดือน',
+      icon: Trophy,
+      targetTab: 'leaderboard'
+    },
+    {
+      id: 'teaching',
+      label: 'พื้นที่ทำงานครู',
+      icon: ClipboardCheck,
+      targetTab: 'teaching'
+    },
+    {
+      id: 'report-review',
+      label: 'ตรวจรายงานการสอน',
+      icon: CheckCircle2,
+      targetTab: 'report-review'
+    },
+    {
+      id: 'registry-import',
+      label: 'นำเข้าข้อมูลทะเบียน',
+      icon: FileSpreadsheet,
+      targetTab: 'registry-import'
+    },
     { 
       id: 'learning', 
-      label: 'สื่อการเรียนรู้', 
+      label: 'คลังสื่อการเรียนรู้', 
       icon: BookOpen,
       targetTab: 'learning'
     },
@@ -96,12 +115,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       label: 'รายงานสถิติ', 
       icon: BarChart2,
       targetTab: 'statistics'
-    },
-    { 
-      id: 'media_vault', 
-      label: 'คลังสื่อ', 
-      icon: FolderOpen,
-      targetTab: 'media_vault'
     },
     { 
       id: 'news', 
@@ -125,10 +138,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   };
 
   const handleMenuClick = (item: typeof menuItems[0]) => {
-    if (item.targetTab === 'about') {
-      onReturnToPublic();
-      window.location.hash = '#/about';
-    } else if (item.targetTab === 'contact') {
+    if (item.targetTab === 'contact') {
       onReturnToPublic();
       window.location.hash = '#/contact';
     } else {
@@ -139,10 +149,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
   const isMenuItemActive = (item: typeof menuItems[0]) => {
     if (item.id === 'overview' && (currentTab === 'overview' || currentTab === 'hub-overview')) return true;
-    if (item.id === 'schools' && (currentTab === 'hub-registry' || currentTab === 'schools')) return true;
+    if (item.id === 'schools' && currentTab === 'schools') return true;
     if (item.id === 'personnel' && (currentTab === 'hub-registry' || currentTab === 'personnel')) return true;
     if (item.id === 'activities' && currentTab === 'hub-operations') return true;
-    if ((item.id === 'statistics' || item.id === 'learning' || item.id === 'media_vault' || item.id === 'news') && currentTab === 'hub-governance') return true;
+    if (item.id === 'statistics' && currentTab === 'hub-governance') return true;
+    if (item.id === 'learning' && currentTab === 'media_vault') return true;
     return currentTab === item.targetTab;
   };
 
@@ -168,18 +179,20 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F7FC] flex flex-col font-sans text-[#1E293B]">
+    <div className="dare-playful dare-admin h-screen overflow-hidden flex flex-col font-sans text-[#1E293B]">
+      <PlayfulDecor />
       {/* Main Container (Sidebar + Content Viewport) */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 min-h-0 h-full flex overflow-hidden">
         {/* Desktop Left Sidebar (Matching Mockup 10 Items + Mascot) */}
-        <aside className="hidden md:flex flex-col w-[204px] bg-[#142252] text-white shrink-0 border-r border-[#0F1A43] select-none overflow-y-auto">
+        <aside className="dare-sidebar-shell hidden md:flex flex-col w-[204px] h-full self-stretch text-white shrink-0 border-r border-[#2B1556] select-none overflow-hidden">
           {/* Top Brand Logo */}
-          <div className="h-[128px] shrink-0 bg-white flex items-center justify-center px-3 py-2 shadow-sm">
-            <DareLogo className="h-[108px] w-full justify-center" />
+          <div className="dare-sidebar-brand relative z-10 min-h-[154px] shrink-0 flex flex-col items-center justify-center px-3 pt-3 pb-3">
+            <img src="/images/bpp-dare-combined-logo.png" alt="ตราตำรวจตระเวนชายแดนและ D.A.R.E. Thailand" className="block w-full max-h-[72px] object-contain" draggable={false} />
+            <p className="mt-3 max-w-[175px] text-center text-[11px] font-semibold leading-relaxed tracking-wide text-white/90">“เด็กไทย คิดเป็น เลือกได้<br/>ไม่พึ่งยาเสพติด”</p>
           </div>
 
           {/* 10 Navigation Items */}
-          <div className="py-4 px-3 space-y-1.5 flex-1 bg-gradient-to-b from-[#142252] to-[#101A45]">
+          <div className="dare-sidebar-nav relative z-10 py-4 px-2.5 space-y-1.5 flex-1 min-h-0 overflow-y-auto sidebar-nav-scroll">
             {menuItems.map((item) => {
               const active = isMenuItemActive(item);
               const Icon = item.icon;
@@ -187,14 +200,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleMenuClick(item)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-[13px] font-medium transition-all text-left ${
+                  className={`dare-sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-[12px] font-medium transition-all text-left ${
                     active
-                      ? 'bg-gradient-to-r from-[#7C45FF] to-[#6044F5] text-white shadow-md shadow-indigo-950/30'
-                      : 'text-indigo-100/85 hover:text-white hover:bg-white/10'
+                      ? 'dare-sidebar-item-active text-white'
+                      : 'text-indigo-100/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-white' : 'text-purple-300'}`} />
-                  <span className="truncate">{item.label}</span>
+                  <span className="min-w-0 leading-snug">{item.label}</span>
                 </button>
               );
             })}
@@ -211,15 +224,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               className="fixed inset-0 bg-black/60 backdrop-blur-xs"
               onClick={() => setMobileSidebarOpen(false)}
             />
-            <div className="relative w-72 bg-[#142252] text-white flex flex-col h-full shadow-2xl z-10 overflow-y-auto">
-              <div className="h-[112px] bg-white px-3 py-2 flex items-center justify-between">
-                <DareLogo className="h-[96px] w-full justify-center" />
-                <button onClick={() => setMobileSidebarOpen(false)} className="text-gray-400 hover:text-white">
-                  <X className="w-5 h-5" />
-                </button>
+            <div className="dare-sidebar-shell relative w-72 text-white flex flex-col h-full shadow-2xl z-10 overflow-y-auto">
+              <div className="dare-sidebar-brand relative z-10 min-h-[145px] px-3 pt-3 pb-3 flex flex-col items-center justify-center">
+                <div className="flex w-full items-start gap-2">
+                  <img src="/images/bpp-dare-combined-logo.png" alt="ตราตำรวจตระเวนชายแดนและ D.A.R.E. Thailand" className="block min-w-0 flex-1 max-h-[70px] object-contain" draggable={false} />
+                  <button onClick={() => setMobileSidebarOpen(false)} className="rounded-full bg-white/10 p-1.5 text-white/80 hover:bg-white/20 hover:text-white">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <p className="mt-2 text-center text-[11px] font-semibold leading-relaxed text-white/90">“เด็กไทย คิดเป็น เลือกได้<br/>ไม่พึ่งยาเสพติด”</p>
               </div>
 
-              <div className="py-3 px-3 space-y-1 flex-1 bg-gradient-to-b from-[#142252] to-[#101A45]">
+              <div className="dare-sidebar-nav relative z-10 py-3 px-2.5 space-y-1 flex-1 min-h-0 overflow-y-auto sidebar-nav-scroll">
                 {menuItems.map((item) => {
                   const active = isMenuItemActive(item);
                   const Icon = item.icon;
@@ -227,8 +243,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     <button
                       key={item.id}
                       onClick={() => handleMenuClick(item)}
-                      className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-[13px] font-medium text-left transition-all ${
-                        active ? 'bg-gradient-to-r from-[#7C45FF] to-[#6044F5] text-white' : 'text-indigo-100/85 hover:bg-white/10'
+                      className={`dare-sidebar-item w-full flex items-center gap-3 px-3 py-3 rounded-xl text-[12px] font-medium text-left transition-all ${
+                        active ? 'dare-sidebar-item-active text-white' : 'text-indigo-100/90 hover:bg-white/10 hover:text-white'
                       }`}
                     >
                       <Icon className="w-4 h-4 shrink-0" />
@@ -244,7 +260,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         )}
 
         {/* Main Content Area */}
-        <div className="relative flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <div className="relative flex-1 flex flex-col min-w-0 min-h-0 h-full overflow-y-auto overscroll-y-contain">
           {/* Top Bar matching Mockup */}
           <header className="absolute inset-x-0 top-0 z-30 flex h-[76px] shrink-0 items-center justify-between border-b border-white/60 bg-white/35 px-4 shadow-sm backdrop-blur-[3px] sm:px-6 xl:px-7">
             {/* Left: Mobile Toggle & Official Title */}
@@ -317,9 +333,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   title="การแจ้งเตือน"
                 >
                   <Bell className="w-4 h-4" />
-                  <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#EF4444] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
-                    3
-                  </span>
                 </button>
 
                 {/* Notifications Popup */}
@@ -327,7 +340,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 p-3 z-50 text-xs space-y-2">
                     <div className="font-bold text-[#1E293B] border-b pb-2 flex items-center justify-between">
                       <span>การแจ้งเตือนล่าสุด</span>
-                      <span className="text-[10px] text-[#7C3AED] font-semibold">3 รายการ</span>
+                      <span className="text-[10px] text-[#7C3AED] font-semibold">ตัวอย่าง UI</span>
                     </div>
                     <div className="space-y-1.5">
                       <div className="p-2 rounded-xl bg-purple-50/60 text-[11px] text-[#32145C]">
@@ -412,11 +425,32 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </header>
 
           {/* Main Viewport Content */}
-          <main className={currentTab === 'overview' || currentTab === 'hub-overview' ? "flex-1 min-w-0 p-0" : "flex-1 min-w-0 px-4 pb-8 pt-[92px] sm:px-6 sm:pt-[100px] lg:px-8"}>
+          <main className={currentTab === 'overview' || currentTab === 'hub-overview' ? "mnav-pad flex-1 min-w-0 p-0 pt-0" : "mnav-pad flex-1 min-w-0 px-4 pb-8 pt-[92px] sm:px-6 sm:pt-[100px] lg:px-8"}>
             {children}
           </main>
         </div>
       </div>
+
+      {/* Mobile bottom navigation (hidden ≥ md) */}
+      <nav className="mnav" aria-label="เมนูหลักบนมือถือ">
+        {([
+          { id: 'overview', label: 'หน้าหลัก', Icon: Home, active: currentTab === 'overview' || currentTab === 'hub-overview' },
+          { id: 'personnel', label: 'ครูแดร์', Icon: Users, active: currentTab === 'hub-registry' || currentTab === 'personnel' },
+          { id: 'leaderboard', label: 'อันดับ', Icon: Trophy, active: currentTab === 'leaderboard', hero: true },
+          { id: 'teaching', label: 'งานของฉัน', Icon: ClipboardCheck, active: currentTab === 'teaching' },
+        ] as const).map(({ id, label, Icon, active, ...rest }) => (
+          'hero' in rest && rest.hero ? (
+            <button key={id} className="hero" onClick={() => onNavigate(id)} aria-label={label} aria-current={active ? 'page' : undefined}>
+              <span className="disc"><Icon className="h-6 w-6" /></span><em>{label}</em>
+            </button>
+          ) : (
+            <button key={id} className={active ? 'on' : ''} onClick={() => onNavigate(id)} aria-current={active ? 'page' : undefined}>
+              <Icon className="h-5 w-5" /><span>{label}</span>
+            </button>
+          )
+        ))}
+        <button onClick={() => setMobileSidebarOpen(true)} aria-label="เปิดเมนูทั้งหมด"><Menu className="h-5 w-5" /><span>เมนู</span></button>
+      </nav>
     </div>
   );
 };

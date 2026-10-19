@@ -1,4 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 import { 
   getAuth, 
   signInWithPopup, 
@@ -12,6 +13,7 @@ import firebaseConfig from '../../firebase-applet-config.json';
 // Reuse existing app instance if already initialized
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 export const googleProvider = new GoogleAuthProvider();
 // Required Workspace Scopes for Google Sheets & Drive File access

@@ -44,6 +44,15 @@ export interface Personnel {
   assignedSchoolIds: string[];
   totalActivitiesConducted: number;
   updatedAt: string;
+  // Supplemental fields imported from the official D.A.R.E. status workbook
+  fullName?: string;
+  position?: string;
+  schools?: string;
+  studentCount?: number;
+  retirementYear?: number;
+  trainingHours?: number;
+  badgeLevel?: string;
+  sourceRow?: number;
 }
 
 export type SchoolType = 'bpp_school' | 'obec_primary' | 'obec_expansion' | 'private' | 'municipal';

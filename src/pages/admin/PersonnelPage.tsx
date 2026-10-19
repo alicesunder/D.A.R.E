@@ -20,9 +20,17 @@ import {
   RotateCcw,
   Phone,
   Mail,
-  Award
+  Award,
+  MapPin,
+  Building2,
+  GraduationCap,
+  Star,
+  LayoutGrid,
+  List as ListIcon,
+  BookOpen
 } from 'lucide-react';
 import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
+import teacherPhotoMap from '../../data/teacherPhotoMap.json';
 
 export const PersonnelPage: React.FC = () => {
   const { 
@@ -42,6 +50,9 @@ export const PersonnelPage: React.FC = () => {
   const [orgFilter, setOrgFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [assignmentFilter, setAssignmentFilter] = useState<'all' | 'assigned' | 'unassigned'>('all');
+  const [provinceFilter, setProvinceFilter] = useState('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [favorites, setFavorites] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem('dare-teacher-favorites') || '[]'); } catch { return []; } });
 
   // Sorting and Pagination
   const [sortField, setSortField] = useState<keyof Personnel>('updatedAt');
@@ -85,11 +96,14 @@ export const PersonnelPage: React.FC = () => {
         p.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.policeId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.rank.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.organizationName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.province.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchRank = rankFilter === 'all' || p.rank === rankFilter;
       const matchOrg = orgFilter === 'all' || p.organizationId === orgFilter;
       const matchStatus = statusFilter === 'all' || p.status === statusFilter;
+      const matchProvince = provinceFilter === 'all' || p.province === provinceFilter;
       const matchAssignment =
         assignmentFilter === 'all'
           ? true
@@ -97,9 +111,9 @@ export const PersonnelPage: React.FC = () => {
           ? p.assignedSchoolCount > 0
           : p.assignedSchoolCount === 0;
 
-      return matchSearch && matchRank && matchOrg && matchStatus && matchAssignment;
+      return matchSearch && matchRank && matchOrg && matchStatus && matchProvince && matchAssignment;
     });
-  }, [personnel, searchQuery, rankFilter, orgFilter, statusFilter, assignmentFilter]);
+  }, [personnel, searchQuery, rankFilter, orgFilter, statusFilter, provinceFilter, assignmentFilter]);
 
   // Sorting
   const sortedPersonnel = useMemo(() => {
@@ -115,6 +129,14 @@ export const PersonnelPage: React.FC = () => {
   // Pagination
   const totalPages = Math.ceil(sortedPersonnel.length / pageSize) || 1;
   const paginatedList = sortedPersonnel.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+  const toggleFavorite = (id: string) => {
+    setFavorites(previous => {
+      const next = previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id];
+      try { localStorage.setItem('dare-teacher-favorites', JSON.stringify(next)); } catch { /* storage may be unavailable */ }
+      return next;
+    });
+  };
 
   const handleSort = (field: keyof Personnel) => {
     if (sortField === field) {
@@ -224,6 +246,7 @@ export const PersonnelPage: React.FC = () => {
     setRankFilter('all');
     setOrgFilter('all');
     setStatusFilter('all');
+    setProvinceFilter('all');
     setAssignmentFilter('all');
     setCurrentPage(1);
   };
@@ -274,6 +297,17 @@ export const PersonnelPage: React.FC = () => {
         </div>
       </div>
 
+      {/* KPI Summary */}
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
+        <div className="relative overflow-hidden rounded-2xl p-4 sm:p-5 text-white bg-gradient-to-br from-[#7B3FC6] to-[#291447] shadow-lg shadow-purple-900/10">
+          <div className="flex items-start justify-between gap-2"><div><p className="text-xs text-white/75">ครู D.A.R.E. ทั้งหมด</p><p className="mt-2 text-2xl sm:text-3xl font-black">{personnel.length.toLocaleString('th-TH')}</p><p className="mt-1 text-[11px] text-white/70">รายชื่อในทะเบียน</p></div><span className="rounded-xl bg-white/15 p-3"><Users className="w-5 h-5" /></span></div>
+          <div className="absolute -right-5 -bottom-8 w-24 h-24 rounded-full border-[12px] border-white/10" />
+        </div>
+        <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#E8E4EF] shadow-sm"><div className="flex items-start justify-between gap-2"><div><p className="text-xs text-[#777184]">หน่วยงานที่เข้าร่วม</p><p className="mt-2 text-2xl sm:text-3xl font-black text-[#291C45]">{new Set(personnel.map(p => p.organizationId).filter(Boolean)).size.toLocaleString('th-TH')}</p><p className="mt-1 text-[11px] text-[#777184]">จากข้อมูลครูในระบบ</p></div><span className="rounded-xl bg-[#EDE4F7] p-3 text-[#5B2A86]"><Building2 className="w-5 h-5" /></span></div></div>
+        <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#E8E4EF] shadow-sm"><div className="flex items-start justify-between gap-2"><div><p className="text-xs text-[#777184]">จังหวัดที่มีครู</p><p className="mt-2 text-2xl sm:text-3xl font-black text-[#291C45]">{new Set(personnel.map(p => p.province).filter(Boolean)).size.toLocaleString('th-TH')}</p><p className="mt-1 text-[11px] text-[#777184]">จังหวัดที่พบในทะเบียน</p></div><span className="rounded-xl bg-blue-50 p-3 text-blue-600"><MapPin className="w-5 h-5" /></span></div></div>
+        <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#E8E4EF] shadow-sm"><div className="flex items-start justify-between gap-2"><div><p className="text-xs text-[#777184]">โรงเรียนที่รับผิดชอบ</p><p className="mt-2 text-2xl sm:text-3xl font-black text-[#291C45]">{personnel.reduce((sum, p) => sum + (Number(p.assignedSchoolCount) || 0), 0).toLocaleString('th-TH')}</p><p className="mt-1 text-[11px] text-[#777184]">รวมจำนวนการมอบหมาย</p></div><span className="rounded-xl bg-amber-50 p-3 text-amber-600"><GraduationCap className="w-5 h-5" /></span></div></div>
+      </div>
+
       {/* Sheets Notice */}
       {sheetsNotice && (
         <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-900">
@@ -307,7 +341,7 @@ export const PersonnelPage: React.FC = () => {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="ค้นหาชื่อ, รหัสตำรวจ, หรือจังหวัด..."
+              placeholder="ค้นหาชื่อ-นามสกุล ยศ ตำแหน่ง หรือหน่วยงาน..."
               className="w-full pl-9 pr-3 py-2 bg-[#F7F5FB] border border-[#E7E0EF] rounded-lg focus:outline-hidden focus:ring-2 focus:ring-[#7C3AED]"
             />
           </div>
@@ -330,6 +364,14 @@ export const PersonnelPage: React.FC = () => {
               <option value="ด.ต.">ด.ต.</option>
               <option value="จ.ส.ต.">จ.ส.ต.</option>
               <option value="ส.ต.ท.">ส.ต.ท.</option>
+            </select>
+          </div>
+
+          {/* Province Filter */}
+          <div>
+            <select value={provinceFilter} onChange={(e) => { setProvinceFilter(e.target.value); setCurrentPage(1); }} className="w-full py-2 px-3 bg-[#F7F5FB] border border-[#E7E0EF] rounded-lg text-[#211A2B]">
+              <option value="all">ทุกจังหวัด</option>
+              {[...new Set(personnel.map(p => p.province).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'th')).map(province => <option key={province} value={province}>{province}</option>)}
             </select>
           </div>
 
@@ -412,8 +454,43 @@ export const PersonnelPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Directory section heading and view switch */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 px-1">
+        <div className="flex items-start gap-3"><div className="p-2.5 rounded-xl bg-[#EDE4F7] text-[#5B2A86]"><BookOpen className="w-5 h-5" /></div><div><h2 className="text-lg font-extrabold text-[#291C45]">รายชื่อครู D.A.R.E.</h2><p className="text-xs text-[#777184] mt-0.5">ครูตำรวจผู้สร้างอนาคตที่ดีให้กับเยาวชนไทย · พบ {filteredPersonnel.length.toLocaleString('th-TH')} รายชื่อ</p></div></div>
+        <div className="inline-flex self-start sm:self-auto p-1 bg-white border border-[#E8E4EF] rounded-xl shadow-sm"><button onClick={() => setViewMode('grid')} className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition ${viewMode === 'grid' ? 'bg-[#5B2A86] text-white shadow' : 'text-[#777184] hover:bg-purple-50'}`}><LayoutGrid className="w-4 h-4"/> การ์ด</button><button onClick={() => setViewMode('list')} className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition ${viewMode === 'list' ? 'bg-[#5B2A86] text-white shadow' : 'text-[#777184] hover:bg-purple-50'}`}><ListIcon className="w-4 h-4"/> รายการ</button></div>
+      </div>
+
+      {viewMode === 'grid' && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          {paginatedList.map((p, idx) => {
+            const teacherPhoto = p.sourceRow != null ? (teacherPhotoMap as Record<string, string>)[String(p.sourceRow)] : undefined;
+            return (
+            <article key={p.id} className="group overflow-hidden rounded-2xl bg-white border border-[#E8E4EF] shadow-sm hover:shadow-xl hover:shadow-purple-900/10 hover:-translate-y-0.5 transition-all duration-200">
+              <div className="relative h-28 sm:h-32 overflow-hidden bg-gradient-to-br from-[#5B2A86] via-[#7B3FC6] to-[#BCA1E8]">
+                <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(circle at 20% 20%, white 0 2px, transparent 3px), radial-gradient(circle at 80% 70%, white 0 2px, transparent 3px)', backgroundSize:'28px 28px'}} />
+                <div className="absolute -right-5 -top-8 w-32 h-32 rounded-full border-[18px] border-white/10" />
+                {teacherPhoto ? (
+                  <img src={teacherPhoto} alt={`รูป ${p.rank} ${p.firstName} ${p.lastName}`} loading={idx < 4 ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center"><div className="w-20 h-20 rounded-full border-4 border-white/80 bg-white/20 shadow-lg flex items-center justify-center text-white text-xl font-black backdrop-blur-sm">{`${p.firstName?.slice(0,1) || ''}${p.lastName?.slice(0,1) || ''}`}</div></div>
+                )}
+                <button onClick={() => toggleFavorite(p.id)} aria-label={favorites.includes(p.id) ? 'นำออกจากรายการโปรด' : 'เพิ่มในรายการโปรด'} className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-sm transition ${favorites.includes(p.id) ? 'bg-amber-300 text-amber-900' : 'bg-white/90 text-[#8B8496] hover:text-amber-500'}`}><Star className={`w-4 h-4 ${favorites.includes(p.id) ? 'fill-current' : ''}`} /></button>
+                <span className={`absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold ${p.status === 'active' ? 'bg-emerald-100 text-emerald-800' : p.status === 'leave' ? 'bg-amber-100 text-amber-800' : 'bg-white/90 text-slate-700'}`}><span className={`w-1.5 h-1.5 rounded-full ${p.status === 'active' ? 'bg-emerald-500' : p.status === 'leave' ? 'bg-amber-500' : 'bg-slate-400'}`} />{p.status === 'active' ? 'ปฏิบัติหน้าที่' : p.status === 'leave' ? 'ลาพัก/ศึกษาต่อ' : p.status === 'transferred' ? 'ย้ายสังกัด' : 'พ้นหน้าที่'}</span>
+              </div>
+              <div className="p-4">
+                <div className="min-h-[56px]"><h3 className="font-extrabold text-sm text-[#291C45] leading-6 break-words">{p.rank} {p.firstName} {p.lastName}</h3><p className="text-[11px] text-[#777184]">ครูตำรวจ D.A.R.E. · {p.batchNumber || 'ไม่ระบุรุ่น'}</p></div>
+                <div className="mt-3 space-y-2 text-xs text-[#655D72]"><p className="flex items-start gap-2"><Building2 className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#7B3FC6]"/><span className="line-clamp-2">{p.organizationName || 'ไม่ระบุหน่วยงาน'}</span></p><p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 shrink-0 text-[#7B3FC6]"/><span>{p.province || 'ไม่ระบุจังหวัด'}</span></p></div>
+                <div className="mt-4 pt-3 border-t border-[#F0ECF5] flex items-center justify-between gap-2"><span className="rounded-lg bg-[#F3ECFB] px-2.5 py-1.5 text-[10px] font-bold text-[#5B2A86]">ดูแล {p.assignedSchoolCount || 0} โรงเรียน</span><button onClick={() => { setSelectedPerson(p); setShowDetailModal(true); }} className="inline-flex items-center gap-1 rounded-lg px-3 py-2 bg-[#5B2A86] hover:bg-[#432064] text-white text-[11px] font-bold transition">ดูโปรไฟล์ <Eye className="w-3.5 h-3.5"/></button></div>
+                {(currentRole === 'central_admin' || currentRole === 'unit_admin') && <div className="mt-2 flex gap-2"><button onClick={() => handleOpenEdit(p)} className="flex-1 py-1.5 rounded-lg border border-[#E8E4EF] text-[11px] font-semibold text-[#5B2A86] hover:bg-purple-50"><Edit className="inline w-3 h-3 mr-1"/>แก้ไข</button><button onClick={() => { setTargetDeleteId(p.id); setShowDeleteModal(true); }} className="px-3 py-1.5 rounded-lg border border-red-100 text-red-600 hover:bg-red-50"><Trash2 className="w-3 h-3"/></button></div>}
+              </div>
+            </article>
+          ); })}
+          {paginatedList.length === 0 && <div className="sm:col-span-2 xl:col-span-4 rounded-2xl border border-dashed border-[#D8CBE8] bg-white p-12 text-center"><div className="mx-auto mb-3 w-12 h-12 rounded-2xl bg-[#F3ECFB] text-[#7B3FC6] flex items-center justify-center"><Search className="w-5 h-5"/></div><p className="font-bold text-[#291C45]">ไม่พบรายชื่อครูที่ตรงกับการค้นหา</p><p className="mt-1 text-xs text-[#777184]">ลองเปลี่ยนคำค้นหาหรือล้างตัวกรองแล้วค้นหาอีกครั้ง</p><button onClick={resetFilters} className="mt-4 px-4 py-2 rounded-lg bg-[#5B2A86] text-white text-xs font-bold">ล้างตัวกรอง</button></div>}
+        </div>
+      )}
+
       {/* Main Data Table */}
-      <div className="bg-white rounded-xl border border-[#E7E0EF] shadow-2xs overflow-hidden">
+      <div className={`${viewMode === 'grid' ? 'hidden' : 'block'} bg-white rounded-xl border border-[#E7E0EF] shadow-2xs overflow-hidden`}>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F7F5FB] text-[#756B80] font-semibold border-b border-[#E7E0EF]">

@@ -1,0 +1,14 @@
+{
+  "name": "darebpp-firebase-readonly-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only MCP tools for auditing Firebase project identity and Firestore collection metadata.",
+  "scripts": { "start": "node server.mjs" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "firebase-admin": "^13.4.0",
+    "google-auth-library": "^10.1.0",
+    "zod": "^3.25.0"
+  }
+}

@@ -29,30 +29,30 @@ export const SchoolDirectoryPage: React.FC = () => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div className="dare-public-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
       <div className="text-center max-w-3xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F2ECFA] text-[#5B2A86] text-xs font-semibold">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF0F2] text-[#5926B8] text-xs font-semibold">
           <School className="w-3.5 h-3.5" />
           <span>ทำเนียบโรงเรียนในเครือข่าย</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-[#32145C]">
+        <h1 className="text-3xl font-extrabold text-[#171E5B]">
           โรงเรียนที่เข้าร่วมโครงการ D.A.R.E. ทั่วประเทศ
         </h1>
-        <p className="text-sm text-[#756B80]">
+        <p className="text-sm text-[#64748B]">
           ตรวจสอบรายชื่อโรงเรียนตำรวจตระเวนชายแดน และโรงเรียนเครือข่ายความร่วมมือ สพฐ. ที่ได้รับการบรรจุหลักสูตร D.A.R.E.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E7E0EF] shadow-2xs grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+      <div className="bg-white p-4 rounded-2xl border border-[#E5EAF5] shadow-2xs grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
         <div className="relative">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#756B80]" />
+          <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#64748B]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="ค้นหาชื่อโรงเรียน หรืออำเภอ..."
-            className="w-full pl-9 pr-3 py-2 bg-[#F7F5FB] border border-[#E7E0EF] rounded-lg"
+            className="w-full pl-9 pr-3 py-2 bg-[#F7F9FF] border border-[#E5EAF5] rounded-lg"
           />
         </div>
 
@@ -60,7 +60,7 @@ export const SchoolDirectoryPage: React.FC = () => {
           <select
             value={selectedProvince}
             onChange={(e) => setSelectedProvince(e.target.value)}
-            className="w-full py-2 px-3 bg-[#F7F5FB] border border-[#E7E0EF] rounded-lg"
+            className="w-full py-2 px-3 bg-[#F7F9FF] border border-[#E5EAF5] rounded-lg"
           >
             <option value="all">ทุกจังหวัด</option>
             {provinces.map(p => (
@@ -73,7 +73,7 @@ export const SchoolDirectoryPage: React.FC = () => {
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            className="w-full py-2 px-3 bg-[#F7F5FB] border border-[#E7E0EF] rounded-lg"
+            className="w-full py-2 px-3 bg-[#F7F9FF] border border-[#E5EAF5] rounded-lg"
           >
             <option value="all">ทุกประเภทโรงเรียน</option>
             <option value="bpp_school">รร.ตำรวจตระเวนชายแดน (รร.ตชด.)</option>
@@ -89,28 +89,28 @@ export const SchoolDirectoryPage: React.FC = () => {
         {filtered.map((s) => (
           <div
             key={s.id}
-            className="bg-white p-5 rounded-2xl border border-[#E7E0EF] shadow-2xs hover:shadow-md transition-all space-y-3 flex flex-col justify-between"
+            className="bg-white p-5 rounded-2xl border border-[#E5EAF5] shadow-2xs hover:shadow-md transition-all space-y-3 flex flex-col justify-between"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-50 text-[#5B2A86] border border-purple-100">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-red-50 text-[#5926B8] border border-red-100">
                   {s.type === 'bpp_school' ? 'รร.ตชด.' : 'สพฐ. ร่วมโครงการ'}
                 </span>
-                <span className="text-[10px] text-[#756B80] font-mono">รหัส {s.code}</span>
+                <span className="text-[10px] text-[#64748B] font-mono">รหัส {s.code}</span>
               </div>
-              <h3 className="text-sm font-bold text-[#211A2B]">{s.name}</h3>
-              <div className="text-xs text-[#756B80] flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#5B2A86] shrink-0" />
+              <h3 className="text-sm font-bold text-[#172554]">{s.name}</h3>
+              <div className="text-xs text-[#64748B] flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[#5926B8] shrink-0" />
                 <span>ต.{s.subdistrict} อ.{s.district} จ.{s.province}</span>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#E7E0EF] flex items-center justify-between text-xs">
+            <div className="pt-3 border-t border-[#E5EAF5] flex items-center justify-between text-xs">
               <span className="text-[#168A62] font-semibold flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>{s.assignedPersonnelIds.length > 0 ? 'มีครู ตชด. ประจำการ' : 'รอจัดสรรครู'}</span>
               </span>
-              <span className="text-[#756B80] font-medium">นักเรียน {s.totalStudents} คน</span>
+              <span className="text-[#64748B] font-medium">นักเรียน {s.totalStudents} คน</span>
             </div>
           </div>
         ))}
